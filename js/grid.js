@@ -8,8 +8,7 @@ var Grid = function () {
         return $('<div class="grid-tile water">' + self.tiles[i][j].value + '</div>')
             .on('click', function () {
                 alert('You clicked the tile at index: ' + i + ' ' + j + ' with a value of:' + self.tiles[i][j].value);
-            })
-            .appendTo($row);
+            });
     }
 
     this.construct = function (height, width) {
@@ -27,7 +26,7 @@ var Grid = function () {
                     visited: false,
                     value: Math.ceil(Math.random() * 9)
                 });
-                this.tiles[i][j].$el = makeTile(i, j);
+                this.tiles[i][j].$el = makeTile(i, j).appendTo($row);
             }
         }
         return self;
