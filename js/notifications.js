@@ -29,7 +29,7 @@ notification.show = function (data) {
 
     window.setTimeout(function () {
         $el.removeClass('in');
-    }, data.timeout || 8000)
+    }, data.timeout || 8000);
 
     // store this notification
     notification.list.push(data);
