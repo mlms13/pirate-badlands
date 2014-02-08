@@ -25,11 +25,14 @@ var Grid = function (options) {
             // push a nested array so we can access tiles like this: [2][1]
             tiles.push([]);
 
-            // a reference to the DOM element for this row
             for (j = 0; j < template.width; j++) {
                 tiles[i].push({
                     visited: false,
-                    value: Math.ceil(Math.random() * ((Math.sqrt(template.height * template.width)) * 0.6))
+                    value: Math.ceil(Math.random() * ((Math.sqrt(template.height * template.width)) * 0.8)),
+                    clearTile: function() {
+                        this.visited = true;
+                        this.value = 0;
+                    }
                 });
             }
         }

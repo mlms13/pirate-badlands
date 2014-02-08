@@ -46,6 +46,26 @@ var Cursor = function (options) {
                 this.place({row: this.row + value, col: this.col}, tiles[this.row + value][this.col]);
             }
         }
+        this.visitTiles(tiles, {col: this.col, row: this.row}, {col: col, row: row});
+    };
+
+    this.visitTiles = function(tiles, start, end) {
+        // Make a function that takes a starting coordinate and an end coordinate and clears every tile in between.
+        var colDiff = Math.abs(start.col - end.col),
+            rowDiff = Math.abs(start.row - end.row),
+            i;
+
+        // if (colDiff === rowDiff) diagonal move
+
+        if (rowDiff === 0) {
+            for (i = 0; i < colDiff; i++) {
+                tiles[start.row][i].clearTile();
+            }
+        } else if (colDiff === 0) {
+            for (i = 0; i < rowDiff; i++) {
+                tiles[i][start.col].clearTile();
+            }
+        }
     };
 };
 
