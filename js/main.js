@@ -1,3 +1,6 @@
 var game = require('./game');
 
-console.log(game.grid.tiles.length);
+$('#startGame').on('click', function() {
+	game.startGame();
+	console.log(game.grid.tiles.length);
+});
