@@ -76,7 +76,7 @@ var Grid = function () {
             for (j = 0; j < template.width; j++) {
                 self.tiles[i].push({
                     visited: false,
-                    value: Math.ceil(Math.random() * 9)
+                    value: Math.ceil(Math.random() * ((Math.sqrt(template.height * template.width)) * 0.6))
                 });
             }
         }
