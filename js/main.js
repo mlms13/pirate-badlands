@@ -4,11 +4,12 @@ var storage = require('./storage');
 if (localStorage && storage.getUser()) {
 	var user = storage.getUser();
 } else {
-	storage.saveUserState({noLevels: 0, achievements: []});
+	var user = {noLevels: 0, achievements: []};
+	storage.saveUserState(user);
 }
 
 $('#startGame').on('click', function() {
-	game.startGame();
+	game.startGame(user.noLevels);
 	$(document).trigger('gameStarted');
 });
 
