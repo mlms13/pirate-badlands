@@ -1,6 +1,7 @@
 // required stuff
 var Grid = require('./grid');
 var templates = require('./templates');
+var notification = require('./notifications');
 
 // this module
 var game = {};
@@ -81,6 +82,11 @@ game.startGame = function (level) {
         }
     });
     game.grid.createGrid(templates[level]).draw();
+    notification.show({
+        type: 'success',
+        title: 'Ready to rock?',
+        message: 'You better be, because a game is totally starting.'
+    });
 };
 
 module.exports = game;
