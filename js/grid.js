@@ -1,6 +1,7 @@
 var Grid = function () {
     var self = this,
-        $grid = $('<div class="grid" />');
+        $grid = $('<div class="grid" />'),
+        cursorPos = {};
 
     this.tiles = []; // an array of tile objects
 
@@ -22,11 +23,11 @@ var Grid = function () {
             $row = $('<div class="grid-row" />').appendTo($grid);
 
             for (j = 0; j < width; j++) {
-                this.tiles[i].push({
+                self.tiles[i].push({
                     visited: false,
                     value: Math.ceil(Math.random() * 9)
                 });
-                this.tiles[i][j].$el = makeTile(i, j).appendTo($row);
+                self.tiles[i][j].$el = makeTile(i, j).appendTo($row);
             }
         }
         return self;
@@ -34,6 +35,20 @@ var Grid = function () {
 
     this.draw = function ($parent) {
         $grid.appendTo($parent || $('body'));
+        return self;
+    };
+
+    this.placeCursor = function (tile) {
+        var coords = {
+            x: Math.floor(Math.random() * self.tiles.length),
+            y: Math.floor(Math.random() * self.tiles[0].length)
+        };
+
+        tile = tile || self.tiles[coords.x][coords.y];
+        tile.visited = true;
+        tile.$el.addClass('cursor');
+        cursorPos = coords;
+
         return self;
     };
 };
