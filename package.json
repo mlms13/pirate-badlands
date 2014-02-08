@@ -6,6 +6,16 @@
     "gulp-autoprefixer": "0.0.5",
     "gulp-less": "~1.2.1",
     "gulp-browserify": "~0.4.2",
-    "gulp-stylus": "0.0.12"
+    "gulp-stylus": "0.0.12",
+    "gulp-jshint": "~1.4.0",
+    "express": "~3.4.8",
+    "path": "~0.4.9"
+  },
+  "jshintConfig": {
+    "strict": false,
+    "globals": {
+      "require": false,
+      "module": false
+    }
   }
 }
