@@ -61,7 +61,7 @@ var Grid = function (options) {
         // draw the cursor accordion to the options passed to the grid constructor
         cursor.place(options.cursor, tiles[options.cursor.row][options.cursor.col]);
 
-        $grid.html($parent || $('#game-board'));
+        $grid.appendTo($parent || $('#game-board'));
 
         return self;
     };
