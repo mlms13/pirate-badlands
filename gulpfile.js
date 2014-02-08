@@ -19,7 +19,7 @@ gulp.task('lint', function () {
         .pipe(jshint.reporter(stylish));
 });
 
-gulp.task('js', function() {
+gulp.task('js', function () {
     var browserify = require('gulp-browserify');
 
     gulp.src('./js/main.js')
@@ -29,12 +29,23 @@ gulp.task('js', function() {
         .pipe(gulp.dest('./build/js'))
 });
 
-gulp.task('index', function() {
+gulp.task('index', function () {
     gulp.src('./index.html')
         .pipe(gulp.dest('./build'))
 });
 
-gulp.task('watch', ['default'], function () {
+gulp.task('server', function () {
+    var path = require('path'),
+        express = require('express'),
+        app = express();
+
+    app.use(express.static(path.join(__dirname, 'build')));
+    app.listen(4321, function () {
+        console.log('Static web server running on port 4321');
+    });
+});
+
+gulp.task('watch', ['default', 'server'], function () {
     gulp.watch('styl/**', ['stylus']);
     gulp.watch('js/**', ['lint', 'js']);
     gulp.watch('index.html', ['index']);
