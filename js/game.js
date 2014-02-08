@@ -1,17 +1,13 @@
 // required stuff
 var Grid = require('./grid');
+var templates = require('./templates');
 
 // this module
 var game = {};
 
-game.startTutorial = function () {
+game.startGame = function (level) {	
 	game.grid = new Grid();
-	game.grid.createFixed().draw().placeCursor();
-};
-
-game.startGame = function () {
-	game.grid = new Grid();
-	game.grid.createRandom(30, 30).draw().placeCursor();
+	game.grid.createGrid(templates[level]).draw().placeCursor();
 };
 
 module.exports = game;
