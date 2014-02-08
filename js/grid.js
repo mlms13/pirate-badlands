@@ -5,30 +5,45 @@ var Grid = function (options) {
         cursor = new Cursor(options.cursor),
         tiles = []; // an array of tile objects
 
+    this.height = options.height;
+    this.width = options.width;
+
+    // listen for global events
+    $(document).on('cursorPlaced', function (event, data) {
+        $('.cursor').removeClass('cursor');
+        tiles[data.row][data.col].visited = true;
+        tiles[data.row][data.col].$el.addClass('visited cursor');
+    });
+
     function createTileElement(row, col) {
         var tile = tiles[row][col];
 
         return $('<div class="grid-tile water">' + tile.value + '</div>')
             .on('click', function () {
+
+                options.clickTile(cursor, tile);
+
                 // make sure the clicked tile is valid
-                if (options.clickTile.validate(cursor, {row: row, col: col, value: tile.value})) {
-                    console.log('The click was valid... attempting to move cursor');
-                    cursor.move(row, col, tile.value, tiles);
-                }
+                // if (options.clickTile.validate(cursor, {row: row, col: col, value: tile.value})) {
+                //     console.log('The click was valid... attempting to move cursor');
+                //     cursor.move(row, col, tile.value, tiles);
+                // }
             });
     }
 
     this.createGrid = function (template) {
         var i, j;
 
-        for (i = 0; i < template.height; i++) {
+        for (i = 0; i < self.height; i++) {
             // push a nested array so we can access tiles like this: [2][1]
             tiles.push([]);
 
-            for (j = 0; j < template.width; j++) {
+            for (j = 0; j < self.width; j++) {
                 tiles[i].push({
                     visited: false,
-                    value: Math.ceil(Math.random() * ((Math.sqrt(template.height * template.width)) * 0.8)),
+                    value: Math.ceil(Math.random() * ((Math.sqrt(self.height * self.width)) * 0.8)),
+                    row: i,
+                    col: j,
                     clearTile: function() {
                         this.visited = true;
                         this.value = 0;
@@ -61,7 +76,7 @@ var Grid = function (options) {
         }
 
         // draw the cursor accordion to the options passed to the grid constructor
-        cursor.place(options.cursor, tiles[options.cursor.row][options.cursor.col]);
+        cursor.place(options.cursor);
 
         $grid.appendTo($parent || $('#game-board'));
 
