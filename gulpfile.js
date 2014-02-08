@@ -1,6 +1,8 @@
 var gulp = require('gulp'),
     autoprefixer = require('gulp-autoprefixer'),
     stylus = require('gulp-stylus'),
+    jshint = require('gulp-jshint'),
+    stylish = require('jshint-stylish'),
     browserify = require('gulp-browserify');
 
 gulp.task('stylus', function () {
@@ -8,6 +10,12 @@ gulp.task('stylus', function () {
         .pipe(stylus({ paths: ['./styl/*.styl'] }))
         .pipe(autoprefixer())
         .pipe(gulp.dest('./build/css'));
+});
+
+gulp.task('lint', function () {
+    gulp.src('./js/*.js')
+        .pipe(jshint())
+        .pipe(jshint.reporter(stylish));
 });
 
 gulp.task('js', function() {
@@ -26,8 +34,8 @@ gulp.task('index', function() {
 
 gulp.task('watch', function () {
     gulp.watch('styl/**', ['stylus']);
-    gulp.watch('js/**', ['js']);
+    gulp.watch('js/**', ['lint', 'js']);
     gulp.watch('index.html', ['index']);
 });
 
-gulp.task('default', ['stylus', 'js', 'index']);
+gulp.task('default', ['stylus', 'lint', 'js', 'index']);
