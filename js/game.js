@@ -6,8 +6,10 @@ var templates = require('./templates');
 var game = {};
 
 game.startGame = function (level) {	
-	game.grid = new Grid();
-	game.grid.createGrid(templates[level]).draw().placeCursor(templates[level].startPos);
+    game.grid = new Grid({
+        cursor: templates[level].startPos
+    });
+    game.grid.createGrid(templates[level]).draw();
 };
 
 module.exports = game;
