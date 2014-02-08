@@ -9,5 +9,5 @@ if (localStorage && storage.getUser()) {
 
 $('#startGame').on('click', function() {
 	game.startGame();
-	console.log(game.grid.tiles.length);
+	$('document').trigger('gameStarted');
 });
