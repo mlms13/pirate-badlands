@@ -27,6 +27,10 @@ notification.show = function (data) {
         .appendTo(notification.$area)
         .addClass('in');
 
+    window.setTimeout(function () {
+        $el.removeClass('in');
+    }, data.timeout || 8000)
+
     // store this notification
     notification.list.push(data);
 };
