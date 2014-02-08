@@ -51,21 +51,34 @@ var Cursor = function (options) {
 
     this.visitTiles = function(tiles, start, end) {
         // Make a function that takes a starting coordinate and an end coordinate and clears every tile in between.
-        var colDiff = Math.abs(start.col - end.col),
-            rowDiff = Math.abs(start.row - end.row),
+        var colDiff = start.col - end.col,
+            rowDiff = start.row - end.row,
             i;
 
         // if (colDiff === rowDiff) diagonal move
 
         if (rowDiff === 0) {
-            for (i = 0; i < colDiff; i++) {
-                tiles[start.row][i].clearTile();
+            if (colDiff > 0) {
+                for (i = start.col; i < end.col; i++) {
+                    tiles[start.row][i].clearTile();
+                }
+            } else if (colDiff < 0) {
+                for (i = start.col; i > end.col; i--) {
+                    tiles[start.row][i].clearTile();
+                }
             }
         } else if (colDiff === 0) {
-            for (i = 0; i < rowDiff; i++) {
-                tiles[i][start.col].clearTile();
+            if (rowDiff > 0) {
+                for (i = start.row; i < end.row; i++) {
+                    tiles[i][start.col].clearTile();
+                }
+            } else if (rowDiff < 0) {
+                for (i = start.row; i > end.row; i--) {
+                    tiles[i][start.col].clearTile();
+                }
             }
         }
+        console.log(rowDiff, colDiff);
     };
 };
 

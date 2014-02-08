@@ -39,7 +39,9 @@ var Grid = function (options) {
 
         // loop through each predefined tile and create it
         template.definedTiles.forEach(function(tile) {
-            tiles[tile.row][tile.col] = tile;
+            for (var prop in tile) {
+                tiles[tile.row][tile.col][prop] = tile[prop];
+            }
         });
 
         return self;
