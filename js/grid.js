@@ -4,10 +4,7 @@ var Grid = function () {
 
     this.tiles = []; // an array of tile objects
 
-    function checkValidMove(row, col) {
-        // keep track of the value of the clicked tile
-        var value = self.tiles[row][col].value;
-
+    function checkValidMove(row, col, value) {
         // invalid if you click on current cursor
         if (row === cursorPos.row && col === cursorPos.col) return false;
 
@@ -20,39 +17,7 @@ var Grid = function () {
         // make sure the clicked tile wasn't a diagonal
         if (cursorPos.col !== col && cursorPos.row !== row) return false;
 
-        // check to see if we're moving left
-        if (cursorPos.col > col) {
-            if (cursorPos.col - value < 0) {
-                return false;
-            } else {
-                // move the cursor to the left
-                alert('Move left ' + value);
-            }
-        } else if (cursorPos.col < col) {
-            if (cursorPos.col + value > self.tiles[0].length - 1) {
-                return false;
-            } else {
-                // move the cursor to the right
-                alert('Move right ' + value);
-            }
-        }
-
-        // check to see if we're moving up
-        if (cursorPos.row > row) {
-            if (cursorPos.row - value < 0) {
-                return false;
-            } else {
-                // move the cursor up
-                alert('Move up ' + value);
-            }
-        } else if (cursorPos.row < row) {
-            if (cursorPos.row + value > self.tiles.length - 1) {
-                return false;
-            } else {
-                // move the cursor to the down
-                alert('Move down ' + value);
-            }
-        }
+        return true;
     }
 
     function createTileElement(row, col) {
@@ -61,7 +26,10 @@ var Grid = function () {
         return $('<div class="grid-tile water">' + value + '</div>')
             .on('click', function () {
                 // make sure the clicked tile is valid
-                checkValidMove(row, col);
+                if (checkValidMove(row, col, value)) {
+                    console.log('The click was valid... attempting to move cursor');
+                    self.moveCursor(row, col, value);
+                }
             });
     }
 
@@ -108,11 +76,51 @@ var Grid = function () {
 
     this.placeCursor = function (coords) {
         var tile = self.tiles[coords.row][coords.col];
+
+        $('.cursor').removeClass('cursor');
         tile.visited = true;
         tile.$el.addClass('cursor');
         cursorPos = coords;
 
         return self;
+    };
+
+    this.moveCursor = function (row, col, value) {
+        var i;
+
+        // check to see if we're moving left
+        if (cursorPos.col > col) {
+            if (cursorPos.col - value < 0) {
+                return false;
+            } else {
+                // move the cursor to the left
+                self.placeCursor({row: cursorPos.row, col: cursorPos.col - value});
+            }
+        } else if (cursorPos.col < col) {
+            if (cursorPos.col + value > self.tiles[0].length - 1) {
+                return false;
+            } else {
+                // move the cursor to the right
+                self.placeCursor({row: cursorPos.row, col: cursorPos.col + value});
+            }
+        }
+
+        // check to see if we're moving up
+        if (cursorPos.row > row) {
+            if (cursorPos.row - value < 0) {
+                return false;
+            } else {
+                // move the cursor up
+                self.placeCursor({row: cursorPos.row - value, col: cursorPos.col});
+            }
+        } else if (cursorPos.row < row) {
+            if (cursorPos.row + value > self.tiles.length - 1) {
+                return false;
+            } else {
+                // move the cursor to the down
+                self.placeCursor({row: cursorPos.row + value, col: cursorPos.col});
+            }
+        }
     };
 };
 
