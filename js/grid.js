@@ -56,7 +56,7 @@ var Grid = function () {
         }
     }
 
-    function makeTile(row, col) {
+    function createTileElement(row, col) {
         var value = self.tiles[row][col].value;
 
         return $('<div class="grid-tile water">' + value + '</div>')
@@ -81,7 +81,7 @@ var Grid = function () {
                     visited: false,
                     value: Math.ceil(Math.random() * 9)
                 });
-                self.tiles[i][j].$el = makeTile(i, j).appendTo($row);
+                self.tiles[i][j].$el = createTileElement(i, j).appendTo($row);
             }
         }
 
