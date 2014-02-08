@@ -4,27 +4,32 @@
     text-align center
 
 .grid
-    margin auto
-    max-width 550px
+    margin 34px auto 0
+    max-width 420px
 
 .grid-row
-    display flex
+    clear both
+    float left
 
 .grid-tile
     cursor pointer
-    flex 1
-    height 30px
-
-.water
-    background aqua
-    border 1px solid blue
+    float left
+    height 91px
+    line-height 57px
+    margin-top -34px
+    position relative
+    width 70px
 
     &:hover
-        background antiquewhite
+        top -7px
+
+.water
+    background url('../images/water.png') no-repeat
+    color #fff
+    font-family sans-serif
 
 .visited
-    background navy
+    opacity 0.25
 
 .cursor
-    background white
-    border-color red
+    opacity 0.75
