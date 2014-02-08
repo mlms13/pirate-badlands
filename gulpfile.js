@@ -34,7 +34,7 @@ gulp.task('index', function() {
         .pipe(gulp.dest('./build'))
 });
 
-gulp.task('watch', function () {
+gulp.task('watch', ['default'], function () {
     gulp.watch('styl/**', ['stylus']);
     gulp.watch('js/**', ['lint', 'js']);
     gulp.watch('index.html', ['index']);
