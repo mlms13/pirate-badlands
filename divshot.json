@@ -1,0 +1,8 @@
+{
+  "name": "pirate-badlands",
+  "root": "\\.",
+  "clean_urls": true,
+  "error_page": "\\",
+  "cache_control": {},
+  "routes": {}
+}
