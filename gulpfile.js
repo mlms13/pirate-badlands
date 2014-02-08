@@ -21,6 +21,7 @@ gulp.task('js', function() {
 
 gulp.task('watch', function () {
     gulp.watch('less/**', ['less']);
+    gulp.watch('js/**', ['js']);
 });
 
 gulp.task('index', function() {
