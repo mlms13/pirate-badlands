@@ -15,17 +15,16 @@ $('#startGame').on('click', function() {
 
 // Handle height for tiles
 $(document).on('gameStarted', function () {
-    getHeight();
+    setHeight();
 });
 $(window).on('resize', function () {
-    getHeight();
+    setHeight();
 });
-function getHeight() {
+function setHeight() {
     var elWidth = $('.grid-tile').first().width();
 
     if ( $('#inlineHeight').length === 0 ) {
-        $('head').append('<style id="inlineHeight">.grid-tile { height:' + elWidth + 'px }</style>');
-    } else {
-        $('#inlineHeight').html('.grid-tile { height:' + elWidth + 'px }</style>');
+        $('head').append('<style id="inlineHeight" />');
     }
+    $('#inlineHeight').html('.grid-tile { height:' + elWidth + 'px }</style>');
 }
