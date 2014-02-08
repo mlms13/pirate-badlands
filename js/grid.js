@@ -12,30 +12,17 @@ var Grid = function () {
             });
     }
 
-    this.createFixed = function (template) {
-        template.forEach(function (row, rowi) {
-            row.forEach(function (cell, celli) {
-                self.tiles[rowi][celli] = {
-                    visited: false,
-                    value: cell
-                };
-            });
-        });
-
-        return self;
-    };
-
-    this.createRandom = function (height, width) {
+    this.createGrid = function (template) {
         var i, j, $row;
 
-        for (i = 0; i < height; i++) {
+        for (i = 0; i < template.height; i++) {
             // push a nested array so we can access tiles like this: [2][1]
             self.tiles.push([]);
 
             // a reference to the DOM element for this row
             $row = $('<div class="grid-row" />').appendTo($grid);
 
-            for (j = 0; j < width; j++) {
+            for (j = 0; j < template.width; j++) {
                 self.tiles[i].push({
                     visited: false,
                     value: Math.ceil(Math.random() * 9)
@@ -43,6 +30,7 @@ var Grid = function () {
                 self.tiles[i][j].$el = makeTile(i, j).appendTo($row);
             }
         }
+
         return self;
     };
 
