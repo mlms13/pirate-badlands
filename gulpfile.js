@@ -23,4 +23,9 @@ gulp.task('watch', function () {
     gulp.watch('less/**', ['less']);
 });
 
-gulp.task('default', ['less', 'js']);
+gulp.task('index', function() {
+    gulp.src('./index.html')
+        .pipe(gulp.dest('./build'))
+});
+
+gulp.task('default', ['less', 'js', 'index']);
