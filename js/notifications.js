@@ -18,7 +18,7 @@ notification.show = function (data) {
 
     // only append a title if we were given a title
     if (data.title) {
-        $notification.append($('<strong>' + data.title + '</strong>'));
+        $el.append($('<strong>' + data.title + ' </strong>'));
     }
 
     // add the message, then display it
@@ -28,7 +28,7 @@ notification.show = function (data) {
         .addClass('in');
 
     // store this notification
-    notifications.push(data);
+    notification.list.push(data);
 };
 
 module.exports = notification;
