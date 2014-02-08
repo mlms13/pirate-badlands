@@ -89,13 +89,13 @@ var Grid = function () {
     };
 
     this.draw = function ($parent) {
-        var i, j,
+        var i, j, $row,
         $grid = $('<div class="grid" />'),
         rowCount = self.tiles.length,
         colCount = self.tiles[0].length;
 
         for (i = 0; i < rowCount; i++) {
-            $row = $('<div class="grid-row" />').appendTo($grid)
+            $row = $('<div class="grid-row" />').appendTo($grid);
             for (j = 0; j < colCount; j++) {
                 self.tiles[i][j].$el = createTileElement(i, j).appendTo($row);
             }
@@ -107,7 +107,7 @@ var Grid = function () {
     };
 
     this.placeCursor = function (coords) {
-        tile = self.tiles[coords.row][coords.col];
+        var tile = self.tiles[coords.row][coords.col];
         tile.visited = true;
         tile.$el.addClass('cursor');
         cursorPos = coords;
