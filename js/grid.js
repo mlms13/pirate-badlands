@@ -6,31 +6,15 @@ var Grid = function (options) {
 
     this.tiles = []; // an array of tile objects
 
-    function checkValidMove(row, col, value) {
-        // invalid if you click on current cursor
-        if (row === cursor.row && col === cursor.col) return false;
-
-        // make sure the row is within one
-        if (Math.abs(cursor.row - row) > 1) return false;
-
-        // make sure the column is within one
-        if (Math.abs(cursor.col - col) > 1) return false;
-
-        // make sure the clicked tile wasn't a diagonal
-        if (cursor.col !== col && cursor.row !== row) return false;
-
-        return true;
-    }
-
     function createTileElement(row, col) {
-        var value = self.tiles[row][col].value;
+        var tile = self.tiles[row][col];
 
-        return $('<div class="grid-tile water">' + value + '</div>')
+        return $('<div class="grid-tile water">' + tile.value + '</div>')
             .on('click', function () {
                 // make sure the clicked tile is valid
-                if (checkValidMove(row, col, value)) {
+                if (options.clickTile.validate(cursor, {row: row, col: col, value: tile.value})) {
                     console.log('The click was valid... attempting to move cursor');
-                    cursor.move(row, col, value, self.tiles);
+                    cursor.move(row, col, tile.value, self.tiles);
                 }
             });
     }
