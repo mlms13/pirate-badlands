@@ -2,9 +2,7 @@ var Grid = function (options) {
     var self = this,
         cursor = {};
 
-    cursor.place = function (coords) {
-        var tile = self.tiles[coords.row][coords.col];
-
+    cursor.place = function (coords, tile) {
         $('.cursor').removeClass('cursor');
         tile.visited = true;
         tile.$el.addClass('cursor');
@@ -20,14 +18,14 @@ var Grid = function (options) {
                 return false;
             } else {
                 // move the cursor to the left
-                cursor.place({row: cursor.row, col: cursor.col - value});
+                cursor.place({row: cursor.row, col: cursor.col - value}, self.tiles[cursor.row][cursor.col - value]);
             }
         } else if (cursor.col < col) {
             if (cursor.col + value > self.tiles[0].length - 1) {
                 return false;
             } else {
                 // move the cursor to the right
-                cursor.place({row: cursor.row, col: cursor.col + value});
+                cursor.place({row: cursor.row, col: cursor.col + value}, self.tiles[cursor.row][cursor.col + value]);
             }
         }
 
@@ -37,14 +35,14 @@ var Grid = function (options) {
                 return false;
             } else {
                 // move the cursor up
-                cursor.place({row: cursor.row - value, col: cursor.col});
+                cursor.place({row: cursor.row - value, col: cursor.col}, self.tiles[cursor.row - value][cursor.col]);
             }
         } else if (cursor.row < row) {
             if (cursor.row + value > self.tiles.length - 1) {
                 return false;
             } else {
                 // move the cursor to the down
-                cursor.place({row: cursor.row + value, col: cursor.col});
+                cursor.place({row: cursor.row + value, col: cursor.col}, self.tiles[cursor.row + value][cursor.col]);
             }
         }
     };
@@ -118,7 +116,7 @@ var Grid = function (options) {
         }
 
         // draw the cursor accordion to the options passed to the grid constructor
-        cursor.place(options.cursor);
+        cursor.place(options.cursor, self.tiles[options.cursor.row][options.cursor.col]);
 
         $grid.appendTo($parent || $('body'));
 
