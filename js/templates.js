@@ -2,6 +2,7 @@ var templates = [
 	{
 		height: 6,
 		width: 6,
+		startPos: {row: 4, col: 1},
 		definedTiles: [
 			{row: 4, col: 2, visited: false, value: 3},
 			{row: 3, col: 4, visited: false, value: 3},
