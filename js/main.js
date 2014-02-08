@@ -9,7 +9,7 @@ if (localStorage && storage.getUser()) {
 }
 
 $('#startGame').on('click', function() {
-	game.startGame(user.noLevels);
+    game.startGame(user.noLevels);
 	$(document).trigger('gameStarted');
 });
 
