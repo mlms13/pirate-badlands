@@ -1,25 +1,27 @@
-var gulp = require('gulp'),
-    autoprefixer = require('gulp-autoprefixer'),
-    stylus = require('gulp-stylus'),
-    jshint = require('gulp-jshint'),
-    stylish = require('jshint-stylish'),
-    browserify = require('gulp-browserify');
+var gulp = require('gulp');
 
 gulp.task('stylus', function () {
-    return gulp.src('./styl/main.styl')
+    var stylus = require('gulp-stylus'),
+        autoprefixer = require('gulp-autoprefixer');
+
+    gulp.src('./styl/main.styl')
         .pipe(stylus({ paths: ['./styl/*.styl'] }))
         .pipe(autoprefixer())
         .pipe(gulp.dest('./build/css'));
 });
 
 gulp.task('lint', function () {
+    var jshint = require('gulp-jshint'),
+        stylish = require('jshint-stylish');
+
     gulp.src('./js/*.js')
         .pipe(jshint())
         .pipe(jshint.reporter(stylish));
 });
 
 gulp.task('js', function() {
-    // Single entry point to browserify
+    var browserify = require('gulp-browserify');
+
     gulp.src('./js/main.js')
         .pipe(browserify({
           insertGlobals : true
