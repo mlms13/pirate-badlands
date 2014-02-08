@@ -6,16 +6,24 @@ body
 	margin 0
 	padding 0
 
+.grid
+	text-align center
+
 .grid-row
 	clear both
+	padding-bottom 3.333333333%
+	position relative
 
 .grid-tile
+	bottom 0
 	cursor pointer
-	height 3.333333333vw
-	float left
-	line-height 3.333333333vw
-	text-align center
-	width 3.333333333vw
+	position absolute
+	top 0
+	width 3.333333333%
+
+	for num in (0..29)
+		&:nth-of-type({num + 1})
+			left (num * 3.333333333)%
 
 .water
 	background aqua
