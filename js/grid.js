@@ -1,21 +1,24 @@
 var Grid = function () {
     var self = this,
-        cursorPos = {};
+        cursor = {
+            row: null,
+            col: null
+        };
 
     this.tiles = []; // an array of tile objects
 
     function checkValidMove(row, col, value) {
         // invalid if you click on current cursor
-        if (row === cursorPos.row && col === cursorPos.col) return false;
+        if (row === cursor.row && col === cursor.col) return false;
 
         // make sure the row is within one
-        if (Math.abs(cursorPos.row - row) > 1) return false;
+        if (Math.abs(cursor.row - row) > 1) return false;
 
         // make sure the column is within one
-        if (Math.abs(cursorPos.col - col) > 1) return false;
+        if (Math.abs(cursor.col - col) > 1) return false;
 
         // make sure the clicked tile wasn't a diagonal
-        if (cursorPos.col !== col && cursorPos.row !== row) return false;
+        if (cursor.col !== col && cursor.row !== row) return false;
 
         return true;
     }
@@ -80,7 +83,10 @@ var Grid = function () {
         $('.cursor').removeClass('cursor');
         tile.visited = true;
         tile.$el.addClass('cursor');
-        cursorPos = coords;
+
+        // update the cursor's position
+        cursor.row = coords.row;
+        cursor.col = coords.col;
 
         return self;
     };
@@ -89,36 +95,36 @@ var Grid = function () {
         var i;
 
         // check to see if we're moving left
-        if (cursorPos.col > col) {
-            if (cursorPos.col - value < 0) {
+        if (cursor.col > col) {
+            if (cursor.col - value < 0) {
                 return false;
             } else {
                 // move the cursor to the left
-                self.placeCursor({row: cursorPos.row, col: cursorPos.col - value});
+                self.placeCursor({row: cursor.row, col: cursor.col - value});
             }
-        } else if (cursorPos.col < col) {
-            if (cursorPos.col + value > self.tiles[0].length - 1) {
+        } else if (cursor.col < col) {
+            if (cursor.col + value > self.tiles[0].length - 1) {
                 return false;
             } else {
                 // move the cursor to the right
-                self.placeCursor({row: cursorPos.row, col: cursorPos.col + value});
+                self.placeCursor({row: cursor.row, col: cursor.col + value});
             }
         }
 
         // check to see if we're moving up
-        if (cursorPos.row > row) {
-            if (cursorPos.row - value < 0) {
+        if (cursor.row > row) {
+            if (cursor.row - value < 0) {
                 return false;
             } else {
                 // move the cursor up
-                self.placeCursor({row: cursorPos.row - value, col: cursorPos.col});
+                self.placeCursor({row: cursor.row - value, col: cursor.col});
             }
-        } else if (cursorPos.row < row) {
-            if (cursorPos.row + value > self.tiles.length - 1) {
+        } else if (cursor.row < row) {
+            if (cursor.row + value > self.tiles.length - 1) {
                 return false;
             } else {
                 // move the cursor to the down
-                self.placeCursor({row: cursorPos.row + value, col: cursorPos.col});
+                self.placeCursor({row: cursor.row + value, col: cursor.col});
             }
         }
     };
