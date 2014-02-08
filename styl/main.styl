@@ -10,20 +10,12 @@ body
 	text-align center
 
 .grid-row
-	clear both
-	padding-bottom 3.333333333%
-	position relative
+	display flex
 
 .grid-tile
-	bottom 0
 	cursor pointer
-	position absolute
-	top 0
-	width 3.333333333%
-
-	for num in (0..29)
-		&:nth-of-type({num + 1})
-			left num * (100/30)%
+	flex auto
+	height 30px
 
 .water
 	background aqua
