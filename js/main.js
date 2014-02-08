@@ -9,7 +9,7 @@ if (localStorage && storage.getUser()) {
 
 $('#startGame').on('click', function() {
 	game.startGame();
-	$('document').trigger('gameStarted');
+	$(document).trigger('gameStarted');
 });
 
 // Handle height for tiles
