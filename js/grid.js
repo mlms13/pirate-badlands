@@ -11,7 +11,9 @@ var Grid = function (options) {
     // listen for global events
     $(document).on('cursorPlaced', function (event, data) {
         $('.cursor').removeClass('cursor');
+        tiles[data.row][data.col].clearTile();
         tiles[data.row][data.col].visited = true;
+        tiles[data.row][data.col].$el.html('');
         tiles[data.row][data.col].$el.addClass('visited cursor');
     });
 
@@ -22,12 +24,6 @@ var Grid = function (options) {
             .on('click', function () {
 
                 options.clickTile(cursor, tile);
-
-                // make sure the clicked tile is valid
-                // if (options.clickTile.validate(cursor, {row: row, col: col, value: tile.value})) {
-                //     console.log('The click was valid... attempting to move cursor');
-                //     cursor.move(row, col, tile.value, tiles);
-                // }
             });
     }
 
@@ -46,7 +42,7 @@ var Grid = function (options) {
                     col: j,
                     clearTile: function() {
                         this.visited = true;
-                        this.value = 0;
+                        this.value = 1;
                     }
                 });
             }

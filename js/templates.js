@@ -11,7 +11,14 @@ var templates = [
 			{row: 1, col: 4, visited: false, value: 1, points: 50},
 			{row: 0, col: 5, visited: false, value: 1, endGame: true}
 		]
-	}
+	},
+	{
+		height: 10,
+		width: 30,
+		startPos: {},
+		definedTiles: []
+	},
+	
 ];
 
 module.exports = templates;
