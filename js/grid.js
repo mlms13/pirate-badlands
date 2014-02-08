@@ -12,7 +12,20 @@ var Grid = function () {
             });
     }
 
-    this.construct = function (height, width) {
+    this.createFixed = function (template) {
+        template.forEach(function (row, rowi) {
+            row.forEach(function (cell, celli) {
+                self.tiles[rowi][celli] = {
+                    visited: false,
+                    value: cell
+                };
+            });
+        });
+
+        return self;
+    };
+
+    this.createRandom = function (height, width) {
         var i, j, $row;
 
         for (i = 0; i < height; i++) {
