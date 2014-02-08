@@ -1,6 +1,5 @@
 var Grid = function () {
     var self = this,
-        $grid = $('<div class="grid" />'),
         cursorPos = {};
 
     this.tiles = []; // an array of tile objects
@@ -67,39 +66,48 @@ var Grid = function () {
     }
 
     this.createGrid = function (template) {
-        var i, j, $row;
+        var i, j;
 
         for (i = 0; i < template.height; i++) {
             // push a nested array so we can access tiles like this: [2][1]
             self.tiles.push([]);
 
             // a reference to the DOM element for this row
-            $row = $('<div class="grid-row" />').appendTo($grid);
-
             for (j = 0; j < template.width; j++) {
                 self.tiles[i].push({
                     visited: false,
                     value: Math.ceil(Math.random() * 9)
                 });
-                self.tiles[i][j].$el = createTileElement(i, j).appendTo($row);
             }
         }
+
+        template.definedTiles.forEach(function(tile) {
+            self.tiles[tile.row][tile.col] = tile;
+        });
 
         return self;
     };
 
     this.draw = function ($parent) {
+        var i, j,
+        $grid = $('<div class="grid" />'),
+        rowCount = self.tiles.length,
+        colCount = self.tiles[0].length;
+
+        for (i = 0; i < rowCount; i++) {
+            $row = $('<div class="grid-row" />').appendTo($grid)
+            for (j = 0; j < colCount; j++) {
+                self.tiles[i][j].$el = createTileElement(i, j).appendTo($row);
+            }
+        }
+
         $grid.appendTo($parent || $('body'));
+
         return self;
     };
 
-    this.placeCursor = function (tile) {
-        var coords = {
-            row: Math.floor(Math.random() * self.tiles.length),
-            col: Math.floor(Math.random() * self.tiles[0].length)
-        };
-
-        tile = tile || self.tiles[coords.row][coords.col];
+    this.placeCursor = function (coords) {
+        tile = self.tiles[coords.row][coords.col];
         tile.visited = true;
         tile.$el.addClass('cursor');
         cursorPos = coords;
