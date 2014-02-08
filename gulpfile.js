@@ -1,11 +1,11 @@
 var gulp = require('gulp'),
     autoprefixer = require('gulp-autoprefixer'),
-    less = require('gulp-less'),
+    stylus = require('gulp-stylus'),
     browserify = require('gulp-browserify');
 
-gulp.task('less', function () {
-    return gulp.src('./less/main.less')
-        .pipe(less({ paths: ['./less/*.less'] }))
+gulp.task('stylus', function () {
+    return gulp.src('./styl/main.styl')
+        .pipe(stylus({ paths: ['./styl/*.styl'] }))
         .pipe(autoprefixer())
         .pipe(gulp.dest('./build/css'));
 });
@@ -20,7 +20,7 @@ gulp.task('js', function() {
 });
 
 gulp.task('watch', function () {
-    gulp.watch('less/**', ['less']);
+    gulp.watch('styl/**', ['stylus']);
     gulp.watch('js/**', ['js']);
 });
 
@@ -29,4 +29,4 @@ gulp.task('index', function() {
         .pipe(gulp.dest('./build'))
 });
 
-gulp.task('default', ['less', 'js', 'index']);
+gulp.task('default', ['stylus', 'js', 'index']);
