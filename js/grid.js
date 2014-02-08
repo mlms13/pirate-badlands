@@ -1,51 +1,8 @@
+var Cursor = require('./cursor');
+
 var Grid = function (options) {
     var self = this,
-        cursor = {};
-
-    cursor.place = function (coords, tile) {
-        $('.cursor').removeClass('cursor');
-        tile.visited = true;
-        tile.$el.addClass('cursor');
-
-        // update the cursor's position
-        cursor.row = coords.row;
-        cursor.col = coords.col;
-    };
-    cursor.move = function (row, col, value, tiles) {
-        // check to see if we're moving left
-        if (cursor.col > col) {
-            if (cursor.col - value < 0) {
-                return false;
-            } else {
-                // move the cursor to the left
-                cursor.place({row: cursor.row, col: cursor.col - value}, tiles[cursor.row][cursor.col - value]);
-            }
-        } else if (cursor.col < col) {
-            if (cursor.col + value > self.tiles[0].length - 1) {
-                return false;
-            } else {
-                // move the cursor to the right
-                cursor.place({row: cursor.row, col: cursor.col + value}, tiles[cursor.row][cursor.col + value]);
-            }
-        }
-
-        // check to see if we're moving up
-        if (cursor.row > row) {
-            if (cursor.row - value < 0) {
-                return false;
-            } else {
-                // move the cursor up
-                cursor.place({row: cursor.row - value, col: cursor.col}, tiles[cursor.row - value][cursor.col]);
-            }
-        } else if (cursor.row < row) {
-            if (cursor.row + value > self.tiles.length - 1) {
-                return false;
-            } else {
-                // move the cursor to the down
-                cursor.place({row: cursor.row + value, col: cursor.col}, tiles[cursor.row + value][cursor.col]);
-            }
-        }
-    };
+        cursor = new Cursor(options.cursor);
 
     this.tiles = []; // an array of tile objects
 
