@@ -5,10 +5,64 @@ var Grid = function () {
 
     this.tiles = []; // an array of tile objects
 
-    function makeTile(i, j) {
-        return $('<div class="grid-tile water">' + self.tiles[i][j].value + '</div>')
+    function checkValidMove(row, col) {
+        // keep track of the value of the clicked tile
+        var value = self.tiles[row][col].value;
+
+        // invalid if you click on current cursor
+        if (row === cursorPos.row && col === cursorPos.col) return false;
+
+        // make sure the row is within one
+        if (Math.abs(cursorPos.row - row) > 1) return false;
+
+        // make sure the column is within one
+        if (Math.abs(cursorPos.col - col) > 1) return false;
+
+        // make sure the clicked tile wasn't a diagonal
+        if (cursorPos.col !== col && cursorPos.row !== row) return false;
+
+        // check to see if we're moving left
+        if (cursorPos.col > col) {
+            if (cursorPos.col - value < 0) {
+                return false;
+            } else {
+                // move the cursor to the left
+                alert('Move left ' + value);
+            }
+        } else if (cursorPos.col < col) {
+            if (cursorPos.col + value > self.tiles[0].length - 1) {
+                return false;
+            } else {
+                // move the cursor to the right
+                alert('Move right ' + value);
+            }
+        }
+
+        // check to see if we're moving up
+        if (cursorPos.row > row) {
+            if (cursorPos.row - value < 0) {
+                return false;
+            } else {
+                // move the cursor up
+                alert('Move up ' + value);
+            }
+        } else if (cursorPos.row < row) {
+            if (cursorPos.row + value > self.tiles.length - 1) {
+                return false;
+            } else {
+                // move the cursor to the down
+                alert('Move down ' + value);
+            }
+        }
+    }
+
+    function makeTile(row, col) {
+        var value = self.tiles[row][col].value;
+
+        return $('<div class="grid-tile water">' + value + '</div>')
             .on('click', function () {
-                alert('You clicked the tile at index: ' + i + ' ' + j + ' with a value of:' + self.tiles[i][j].value);
+                // make sure the clicked tile is valid
+                checkValidMove(row, col);
             });
     }
 
@@ -41,11 +95,11 @@ var Grid = function () {
 
     this.placeCursor = function (tile) {
         var coords = {
-            x: Math.floor(Math.random() * self.tiles.length),
-            y: Math.floor(Math.random() * self.tiles[0].length)
+            row: Math.floor(Math.random() * self.tiles.length),
+            col: Math.floor(Math.random() * self.tiles[0].length)
         };
 
-        tile = tile || self.tiles[coords.x][coords.y];
+        tile = tile || self.tiles[coords.row][coords.col];
         tile.visited = true;
         tile.$el.addClass('cursor');
         cursorPos = coords;
