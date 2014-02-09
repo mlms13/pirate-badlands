@@ -11,23 +11,27 @@ var game = {};
 function validateClick(cursor, tile) {
     // invalid if you click on current cursor
     if (tile.row === cursor.row && tile.col === cursor.col) { 
-        console.log('You clicked on the cursor');
-        return false; }
+        notification.alert({type: 'danger', message: 'Try clicking a tile next to your ship.'});
+        return false;
+    }
 
     // make sure the row is within one
     if (Math.abs(cursor.row - tile.row) > 1) { 
-        console.log('You clicked a row that is too far away');
-        return false; }
+        notification.alert({type: 'danger', message: 'Try clicking a tile next to your ship.'});
+        return false;
+    }
 
     // make sure the column is within one
     if (Math.abs(cursor.col - tile.col) > 1) { 
-        console.log('You clicked a column that is too far away');
-        return false; }
+        notification.alert({type: 'danger', message: 'Try clicking a tile next to your ship.'});
+        return false;
+    }
 
     // make sure the clicked tile wasn't a diagonal
     if (cursor.col !== tile.col && cursor.row !== tile.row) { 
-        console.log('You clicked a diagonal tile and we do not like that');
-        return false; }
+        notification.alert({type: 'danger', message: "Your ship doesn't know how to move diagonally."});
+        return false;
+    }
 
     return true;
 }
