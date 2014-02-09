@@ -3,6 +3,7 @@ var Grid = require('./grid');
 var templates = require('./templates');
 var notification = require('./notifications');
 var storage = require('./storage');
+var tutorial = require('./tutorial');
 
 // Game constructor
 var Game = function (options) {
@@ -98,6 +99,8 @@ var Game = function (options) {
                     error = false,
                     tilesToVisit = [];
 
+                tutorial.hideAllMessages();
+
                 if (direction) {
                     cursor.getPath(direction, clicked.value, function (coords) {
                         tile = self.grid.getTileByIndex(coords.row, coords.col);
@@ -123,6 +126,10 @@ var Game = function (options) {
 
         $(document).trigger('levelStarted');
 
+        if (level === 0) {
+            tutorial.messages['move-ship'].show(self.grid.getTileByIndex(4, 2).$el);
+        }
+
         notification.alert({
             type: 'success',
             title: 'Ready to set sail first mate?',
@@ -146,9 +153,21 @@ var Game = function (options) {
             $('#resetGame').text('Next Level');
 
             if (user.noLevels === templates.length) {
+                var topMessage;
+
+                console.log(getMaxOfArray(user.topScores));
+
+                if (user.totalScore > getMaxOfArray(user.topScores)) {
+                    topMessage = "That's good enough to beat your high score! Nice Job!";
+                } else if (user.totalScore === getMaxOfArray(user.topScores)) {
+                    topMessage = "That ties your highest score, arrrrrrrr.";
+                } else {
+                    topMessage = "Sadly that doesn't beat your top score of " + getMaxOfArray(user.topScores) + " try harrrrrrrrder next time!";
+                }
+
                 notification.modal({
                     title: 'Arrrrr ye be one fair pirate!',
-                    message: 'Ye have completed all levels matey!  Click on Restart Game to reset your game and see if you can top your high score!  Your achievements will persist.',
+                    message: 'Ye have completed all levels with a score of ' + user.totalScore + ' matey! ' + topMessage + ' Click on Restart Game to reset your game and see if you can get even more booty! Your achievements will persist.',
                     buttonText: 'Restart Game',
                     clickHandler: function () {
                         newUser = storage.resetAndGetUser();
@@ -168,5 +187,9 @@ var Game = function (options) {
         }
     });
 };
+
+function getMaxOfArray(numArray) {
+    return Math.max.apply(null, numArray);
+}
 
 module.exports = Game;
