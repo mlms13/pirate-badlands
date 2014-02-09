@@ -80,6 +80,11 @@ var Cursor = function (options) {
 
         index = index || 0;
 
+        if (index === 0) {
+            // let everyone know we've started moving the cursor
+            $(document).trigger('cursorStarted', tiles[0]);
+        }
+
         if (index >= tiles.length) {
             // let everyone know we've reached the end
             $(document).trigger('cursorEnded', tiles[tiles.length - 1]);

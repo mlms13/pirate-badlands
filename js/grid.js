@@ -5,12 +5,16 @@ var Grid = function (options) {
         cursor = new Cursor(options.cursor),
         tiles = [], // an array of tile objects
         score = 0,
-        moves = -1; // So our initial placement gets it to 0
+        moves = 0;
 
     this.height = options.height;
     this.width = options.width;
 
     // listen for global events
+    $(document).on('cursorStarted', function (event, data) {
+        moves += 1;
+    });
+
     $(document).on('cursorPlaced', function (event, data) {
         var tile = tiles[data.row][data.col];
 
@@ -22,7 +26,6 @@ var Grid = function (options) {
                 score += tile.points;
             }
         }
-        moves += 1;
 
         tile.clearTile();
         // tile.visited = true; // Redundant? It's done in clearTile().
