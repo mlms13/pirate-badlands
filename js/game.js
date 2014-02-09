@@ -125,6 +125,8 @@ var Game = function (options) {
             user.noLevels++;
             storage.saveUserState(user);
 
+            $('#resetGame').text('Next Level');
+
             if (user.noLevels === templates.length) {
                 notification.modal({
                     title: 'Arrrrr ye be one fair pirate!',
