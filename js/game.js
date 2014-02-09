@@ -84,6 +84,9 @@ var Game = function (options) {
         // make sure we're starting with a clean slate
         $('#game-board').empty();
 
+        // Clear level event handlers
+        $(document).off('.levelEvent');
+
         self.grid = new Grid({
             template: templates[level],
             clickTile: function (cursor, tile) {

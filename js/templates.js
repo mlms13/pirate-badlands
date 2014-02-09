@@ -147,7 +147,7 @@ var templates = [
             // End Game
             {row: 0, col: 0, value: 1, endGame: true}
         ]
-    },
+    }
 ];
 
 module.exports = templates;

@@ -12,11 +12,11 @@ var Grid = function (options) {
     this.width = options.template.width;
 
     // listen for global events
-    $(document).on('cursorStarted', function (event, data) {
+    $(document).on('cursorStarted.levelEvent', function (event, data) {
         moves += 1;
     });
 
-    $(document).on('cursorPlaced', function (event, data) {
+    $(document).on('cursorPlaced.levelEvent', function (event, data) {
         var tile = tiles[data.row][data.col];
 
         $('.selected').removeClass('selected');
@@ -54,7 +54,7 @@ var Grid = function (options) {
         }
 
         return $('<div class="grid-tile ' + className + ' ">' + tile.value + '</div>')
-            .on('click', function () {
+            .on('click.levelEvent', function () {
                 options.clickTile(cursor, tile);
             });
     }
