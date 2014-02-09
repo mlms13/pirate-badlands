@@ -58,6 +58,10 @@ var Grid = function (options) {
         return self;
     };
 
+    this.getTileByIndex = function (row, col) {
+        return tiles[row][col];
+    };
+
     this.draw = function ($parent) {
         var i, j, $row,
         $grid = $('<div class="grid" />'),

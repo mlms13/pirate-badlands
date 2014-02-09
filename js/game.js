@@ -2,6 +2,7 @@
 var Grid = require('./grid');
 var templates = require('./templates');
 var notification = require('./notifications');
+var storage = require('./storage');
 
 // this module
 var game = {};
@@ -86,6 +87,19 @@ game.startGame = function (level) {
         type: 'success',
         title: 'Ready to rock?',
         message: 'You better be, because a game is totally starting.'
+    });
+
+    $(document).on('cursorEnded', function (event, data) {
+        if (game.grid.getTileByIndex(data.row, data.col).endGame) {
+            console.log('end game');
+            notification.show({
+                type: 'success',
+                title: 'Winner!',
+                message: 'You have won!'
+            });
+
+            // increment noLevels, give option to start next game 
+        }
     });
 };
 

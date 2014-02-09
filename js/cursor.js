@@ -56,6 +56,7 @@ var Cursor = function (options) {
         tilesToVisit.forEach(function (tile) {
             self.place(tile);
         });
+        $(document).trigger('cursorEnded', tilesToVisit[tilesToVisit.length - 1]);
     };
 };
 
