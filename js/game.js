@@ -26,13 +26,13 @@ var Game = function (options) {
 
         // make sure the column is within one
         if (Math.abs(cursor.col - tile.col) > 1) { 
-            notification.alert({type: 'danger', message: 'Arrrr, Try clicking a tile next to \'yer ship.'});
+            notification.alert({type: 'danger', message: 'Arrrr, try clicking a tile next to \'yer ship.'});
             return false;
         }
 
         // make sure the clicked tile wasn't a diagonal
         if (cursor.col !== tile.col && cursor.row !== tile.row) { 
-            notification.alert({type: 'danger', message: "\'Yer ship doesn\'t know how to move on the \'ol diagonal, mate."});
+            notification.alert({type: 'danger', message: "\'Yer ship doesn\'t know how to move on the ol' diagonal, mate."});
             return false;
         }
 
@@ -43,6 +43,7 @@ var Game = function (options) {
         // check to see if we're moving left
         if (cursor.col > tile.col) {
             if (cursor.col - tile.value < 0) {
+                notification.alert({type: 'danger', message: "Arrg, moving there would run yer ship ashore, mate."});
                 return false;
             } else {
                 // move the cursor to the left
@@ -50,6 +51,7 @@ var Game = function (options) {
             }
         } else if (cursor.col < tile.col) {
             if (cursor.col + tile.value > self.grid.width - 1) {
+                notification.alert({type: 'danger', message: "Arrg, moving there would run yer ship ashore, mate."});
                 return false;
             } else {
                 // move the cursor to the right
@@ -60,6 +62,7 @@ var Game = function (options) {
         // check to see if we're moving up
         if (cursor.row > tile.row) {
             if (cursor.row - tile.value < 0) {
+                notification.alert({type: 'danger', message: "Arrg, moving there would run yer ship ashore, mate."});
                 return false;
             } else {
                 // move the cursor up
@@ -67,6 +70,7 @@ var Game = function (options) {
             }
         } else if (cursor.row < tile.row) {
             if (cursor.row + tile.value > self.grid.height - 1) {
+                notification.alert({type: 'danger', message: "Arrg, moving there would run yer ship ashore, mate."});
                 return false;
             } else {
                 // move the cursor to the down
