@@ -7,7 +7,6 @@ var storage = require('./storage');
 // Game constructor
 var Game = function (options) {
     var self = this;
-
     this.grid = null;
 
     // helper validation functions (the rules of the game)
@@ -79,11 +78,10 @@ var Game = function (options) {
         }
     }
 
-    this.start = function () {
+    this.startLevel = function (level) {
         // TODO: Add a class to the page if the template is bigger than 9 tiles wide?
         self.grid = new Grid({
-            cursor: templates[options.level].startPos,
-            template: templates[options.level],
+            template: templates[level],
             clickTile: function (cursor, tile) {
                 var isValid = validateClick(cursor, tile),
                     direction = isValid && getDirection(cursor, tile);
@@ -101,45 +99,32 @@ var Game = function (options) {
             title: 'Ready to set sail first mate?',
             message: 'All hands on deck, we sail at once for ye Booty!.'
         });
-
-        $(document).on('cursorEnded', function (event, data) {
-            if (self.grid.getTileByIndex(data.row, data.col).endGame) {
-                // TODO: make it to where the cursor doesn't actually move to the booty?
-                //       It would be cool if we had the pirate ship one block away so we can see the open treasure chest.
-                self.grid.getTileByIndex(data.row, data.col).$el.addClass('open');
-
-                // increment noLevels, give option to start next game
-                // TODO: add modal window for next game (looks done, but needs to be implemented)
-                // TODO: when noLevels = templates.length then end the game and post high score or some shit.
-                var user = storage.getUser();
-                user.noLevels++;
-                storage.saveUserState(user);
-
-                notification.modal({
-                    title: 'Argggghh!',
-                    message: 'You have found the booty and conquered this sea!  On to the Next!',
-                    buttonText: 'Next Level',
-                    clickHandler: function (modal) {
-                        $('#game-board').empty();
-                        self.grid = new Grid({
-                            cursor: templates[options.level].startPos,
-                            template: templates[user.noLevels],
-                            clickTile: function (cursor, tile) {
-                                var isValid = validateClick(cursor, tile),
-                                    direction = isValid && getDirection(cursor, tile);
-
-                                if (direction) {
-                                    cursor.definePath(direction, tile.value);
-                                }
-                            }
-                        });
-
-                        self.grid.createGrid().draw();
-                    }
-                });
-            }
-        });
     };
+
+    $(document).on('cursorEnded', function (event, data) {
+        if (self.grid.getTileByIndex(data.row, data.col).endGame) {
+            // TODO: make it to where the cursor doesn't actually move to the booty?
+            //       It would be cool if we had the pirate ship one block away so we can see the open treasure chest.
+            self.grid.getTileByIndex(data.row, data.col).$el.addClass('open');
+
+            // increment noLevels, give option to start next game
+            // TODO: add modal window for next game (looks done, but needs to be implemented)
+            // TODO: when noLevels = templates.length then end the game and post high score or some shit.
+            var user = storage.getUser();
+            user.noLevels++;
+            storage.saveUserState(user);
+
+            notification.modal({
+                title: 'Argggghh!',
+                message: 'You have found the booty and conquered this sea!  On to the Next!',
+                buttonText: 'Next Level',
+                clickHandler: function () {
+                    $('#game-board').empty();
+                    self.startLevel(user.noLevels);
+                }
+            });
+        }
+    });
 };
 
 module.exports = Game;

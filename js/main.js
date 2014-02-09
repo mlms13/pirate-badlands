@@ -13,8 +13,8 @@ $('#startGame').on('click', function() {
         storage.saveUserState(user);
     }
 
-    game = new Game({level: user.noLevels});
-    game.start();
+    game = new Game();
+    game.startLevel(user.noLevels);
     $(document).trigger('gameStarted');
 });
 

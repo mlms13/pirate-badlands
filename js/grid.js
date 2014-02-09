@@ -2,7 +2,7 @@ var Cursor = require('./cursor');
 
 var Grid = function (options) {
     var self = this,
-        cursor = new Cursor(options.cursor),
+        cursor = new Cursor(options.template.startPos),
         tiles = [], // an array of tile objects
         score = 0,
         moves = 0;
@@ -115,7 +115,7 @@ var Grid = function (options) {
 
         // make sure the element has been drawn before placing the cursor
         window.setTimeout(function () {
-            cursor.place(options.cursor);
+            cursor.place(self.template.startPos);
         }, 0);
 
         $grid.appendTo($parent || $('#game-board'));
