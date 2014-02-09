@@ -101,7 +101,10 @@ var Game = function (options) {
 
         $(document).on('cursorEnded', function (event, data) {
             if (self.grid.getTileByIndex(data.row, data.col).endGame) {
+                // TODO: make it to where the cursor doesn't actually move to the booty?
+                //       It would be cool if we had the pirate ship one block away so we can see the open treasure chest.
                 console.log('end game');
+                self.grid.getTileByIndex(data.row, data.col).$el.addClass('open');
                 notification.alert({
                     type: 'success',
                     title: 'Argggghh!',
