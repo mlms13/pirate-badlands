@@ -95,10 +95,13 @@ game.startGame = function (level) {
             notification.show({
                 type: 'success',
                 title: 'Winner!',
-                message: 'You have won!'
+                message: 'You have won this level!'
             });
 
-            // increment noLevels, give option to start next game 
+            // increment noLevels, give option to start next game
+            var user = storage.getUser();
+            user.noLevels++;
+            storage.saveUserState(user);
         }
     });
 };

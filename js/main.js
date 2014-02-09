@@ -1,16 +1,18 @@
 var game = require('./game');
 var storage = require('./storage');
 
-if (localStorage && storage.getUser()) {
-	var user = storage.getUser();
-} else {
-	var user = {noLevels: 0, achievements: []};
-	storage.saveUserState(user);
-}
-
 $('#startGame').on('click', function() {
+    var user;
+
+    if (localStorage && storage.getUser()) {
+        user = storage.getUser();
+    } else {
+        user = {noLevels: 0, achievements: []};
+        storage.saveUserState(user);
+    }
+
     game.startGame(user.noLevels);
-	$(document).trigger('gameStarted');
+    $(document).trigger('gameStarted');
 });
 
 // Handle height for tiles
