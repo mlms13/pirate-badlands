@@ -32,6 +32,8 @@ gulp.task('js', function () {
 gulp.task('duplicator', function () {
     gulp.src('./index.html')
         .pipe(gulp.dest('./build'));
+    gulp.src('./credits.html')
+        .pipe(gulp.dest('./build'));
     gulp.src('./images/**')
         .pipe(gulp.dest('./build/images'));
 });
