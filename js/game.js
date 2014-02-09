@@ -91,12 +91,30 @@ var Game = function (options) {
 
         self.grid = new Grid({
             template: templates[level],
-            clickTile: function (cursor, tile) {
-                var isValid = validateClick(cursor, tile),
-                    direction = isValid && getDirection(cursor, tile);
+            clickTile: function (cursor, clicked) {
+                var isValid = validateClick(cursor, clicked),
+                    direction = isValid && getDirection(cursor, clicked),
+                    tile,
+                    error = false,
+                    tilesToVisit = [];
 
                 if (direction) {
-                    cursor.definePath(direction, tile.value);
+                    cursor.getPath(direction, clicked.value, function (coords) {
+                        tile = self.grid.getTileByIndex(coords.row, coords.col);
+                        if (tile.value === -1) {
+                            error = true;
+                        } else {
+                            tilesToVisit.push(coords);
+                        }
+                    });
+                }
+                if (!error && tilesToVisit.length) {
+                    cursor.visitTiles(tilesToVisit);
+                } else {
+                    notification.alert({
+                        type: 'danger',
+                        message: 'Try to steer your ship on the water there mate.'
+                    });
                 }
             }
         });

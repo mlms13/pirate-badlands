@@ -37,44 +37,53 @@ var Cursor = function (options) {
         $(document).trigger('cursorPlaced', coords);
     };
 
-    this.definePath = function (direction, distance) {
-        var i, pitStops = [];
+    this.getPath = function (direction, distance, callback) {
+        var i, coords, pitStops = [];
 
         switch (direction) {
             case 'n':
                 for (i = 1; i <= distance; i++) {
-                    pitStops.push({
+                    coords = {
                         col: this.col,
                         row: this.row - i
-                    });
+                    };
+                    pitStops.push(coords);
+                    callback(coords);
                 }
                 break;
             case 's':
                 for (i = 1; i <= distance; i++) {
-                    pitStops.push({
+                    coords = {
                         col: this.col,
                         row: this.row + i
-                    });
+                    };
+                    pitStops.push(coords);
+                    callback(coords);
                 }
                 break;
             case 'e':
                 for (i = 1; i <= distance; i++) {
-                    pitStops.push({
+                    coords = {
                         col: this.col + i,
                         row: this.row
-                    });
+                    };
+                    pitStops.push(coords);
+                    callback(coords);
+
                 }
                 break;
             case 'w':
                 for (i = 1; i <= distance; i++) {
-                    pitStops.push({
+                    coords = {
                         col: this.col - i,
                         row: this.row
-                    });
+                    };
+                    pitStops.push(coords);
+                    callback(coords);
                 }
                 break;
         }
-        this.visitTiles(pitStops);
+        return pitStops;
     };
 
     this.visitTiles = function(tiles, index) {
