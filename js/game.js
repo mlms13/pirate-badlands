@@ -83,8 +83,7 @@ var Game = function (options) {
         // TODO: Add a class to the page if the template is bigger than 9 tiles wide?
         self.grid = new Grid({
             cursor: templates[options.level].startPos,
-            height: templates[options.level].height,
-            width: templates[options.level].width,
+            template: templates[options.level],
             clickTile: function (cursor, tile) {
                 var isValid = validateClick(cursor, tile),
                     direction = isValid && getDirection(cursor, tile);
@@ -95,7 +94,7 @@ var Game = function (options) {
             }
         });
 
-        self.grid.createGrid(templates[options.level]).draw();
+        self.grid.createGrid().draw();
 
         notification.alert({
             type: 'success',

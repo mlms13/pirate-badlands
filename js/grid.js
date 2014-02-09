@@ -7,8 +7,9 @@ var Grid = function (options) {
         score = 0,
         moves = 0;
 
-    this.height = options.height;
-    this.width = options.width;
+    this.template = options.template;
+    this.height = options.template.height;
+    this.width = options.template.width;
 
     // listen for global events
     $(document).on('cursorStarted', function (event, data) {
@@ -58,7 +59,7 @@ var Grid = function (options) {
             });
     }
 
-    this.createGrid = function (template) {
+    this.createGrid = function () {
         var i, j;
 
         for (i = 0; i < self.height; i++) {
@@ -80,14 +81,14 @@ var Grid = function (options) {
         }
 
         // loop through each predefined tile and create it
-        template.definedTiles.forEach(function(tile) {
+        self.template.definedTiles.forEach(function(tile) {
             for (var prop in tile) {
                 tiles[tile.row][tile.col][prop] = tile[prop];
             }
         });
 
         // Erase the value from the starting cursor position
-        tiles[template.startPos.row][template.startPos.col].value = 0;
+        tiles[self.template.startPos.row][self.template.startPos.col].value = 0;
 
         return self;
     };
