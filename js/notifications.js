@@ -42,12 +42,12 @@ notification.modal = function (data) {
         $dialog = $('<div class="modal-dialog" />').appendTo($modal),
         $content = $('<div class="modal-content" />').appendTo($dialog),
         $header = $('<div class="modal-header" />'),
-        $body = $('<div class="modal-body">' + data.body + '</div>'),
+        $body = $('<div class="modal-body">' + data.message + '</div>'),
         $footer = $('<div class="modal-footer" />');
 
-    if (data.header) {
+    if (data.title) {
         $header.append($('<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times</button>'))
-            .append($('<h4 class="modal-title">' + data.header + '</h4>'))
+            .append($('<h4 class="modal-title">' + data.title + '</h4>'))
             .appendTo($content);
     }
 

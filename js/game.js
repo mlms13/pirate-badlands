@@ -110,10 +110,13 @@ var Game = function (options) {
                 self.grid.getTileByIndex(data.row, data.col).$el.addClass('open');
 
                 console.log('end game');
-                notification.alert({
-                    type: 'success',
+                notification.modal({
                     title: 'Argggghh!',
-                    message: 'You have found the booty and conquered this sea!  On to the Next!'
+                    message: 'You have found the booty and conquered this sea!  On to the Next!',
+                    buttonText: 'Next Level',
+                    clickHandler: function () {
+                        alert('Starting the next level');
+                    }
                 });
 
                 // increment noLevels, give option to start next game
