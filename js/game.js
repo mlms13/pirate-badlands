@@ -80,6 +80,10 @@ var Game = function (options) {
 
     this.startLevel = function (level) {
         // TODO: Add a class to the page if the template is bigger than 9 tiles wide?
+
+        // make sure we're starting with a clean slate
+        $('#game-board').empty();
+
         self.grid = new Grid({
             template: templates[level],
             clickTile: function (cursor, tile) {
@@ -119,7 +123,6 @@ var Game = function (options) {
                 message: 'You have found the booty and conquered this sea!  On to the Next!',
                 buttonText: 'Next Level',
                 clickHandler: function () {
-                    $('#game-board').empty();
                     self.startLevel(user.noLevels);
                 }
             });
