@@ -41,7 +41,7 @@ notification.modal = function (data) {
     var $modal = $('<div class="modal fade" />'),
         $dialog = $('<div class="modal-dialog" />').appendTo($modal),
         $content = $('<div class="modal-content" />').appendTo($dialog),
-        $header = $('<div class="modal-header" />')
+        $header = $('<div class="modal-header" />'),
         $body = $('<div class="modal-body">' + data.body + '</div>'),
         $footer = $('<div class="modal-footer" />');
 
