@@ -17,7 +17,7 @@ $('#startGame').on('click', function() {
 
 // Handle inline styling for tiles
 // Kind of necessary since we're using ratios of height to width for basically everything
-$(document).on('gameStarted', function () {
+$(document).on('levelStarted', function () {
     inlineStyles();
 });
 $(window).on('resize', function () {
