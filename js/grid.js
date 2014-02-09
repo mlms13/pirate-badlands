@@ -19,10 +19,14 @@ var Grid = function (options) {
 
     function createTileElement(row, col) {
         var tile = tiles[row][col];
+        var className = 'water';
 
-        return $('<div class="grid-tile water">' + tile.value + '</div>')
+        if (tile.endGame) {
+            className = 'booty';
+        }
+
+        return $('<div class="grid-tile ' + className + ' ">' + tile.value + '</div>')
             .on('click', function () {
-
                 options.clickTile(cursor, tile);
             });
     }
