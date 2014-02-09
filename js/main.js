@@ -33,14 +33,14 @@ function inlineStyles() {
     if ( $('#inlineCSS').length === 0 ) {
         $('head').append('<style id="inlineCSS" />');
     }
-    $('#inlineCSS').html('.grid-tile {\
-            height:' + elHeight + 'px;\
-            line-height:' + (elHeight * 0.70) + 'px;\
-            margin-top: -' + (elHeight * 0.37) + 'px }\
-        .grid-tile:hover { top: -' + (elHeight * 0.077) + 'px }\
-        .cursor {\
-            height:' + (elHeight - (elHeight * 0.37)) + 'px;\
-            margin-top: -' + ((elHeight * 0.37) - (elHeight * .05)) + 'px;\
-            width: ' + elWidth + 'px\
-        }');
+    $('#inlineCSS').html('.grid-tile {' +
+            'height:' + elHeight + 'px;' +
+            'line-height:' + (elHeight * 0.70) + 'px;' +
+            'margin-top: -' + (elHeight * 0.37) + 'px }' +
+        '.grid-tile:hover { top: -' + (elHeight * 0.077) + 'px }' +
+        '.cursor {' +
+            'height:' + (elHeight - (elHeight * 0.37)) + 'px;' +
+            'margin-top: -' + ((elHeight * 0.37) - (elHeight * 0.05)) + 'px;' +
+            'width: ' + elWidth + 'px;' +
+        '}');
 }
