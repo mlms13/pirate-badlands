@@ -1,6 +1,9 @@
 *
     box-sizing border-box
 
+img
+    max-width 100%
+
 html,
 body
     margin 0
@@ -21,3 +24,23 @@ body
     max-width 500px
     min-height 450px
     text-align center
+
+.site-header h1
+    background url('../images/plank.png')
+    background-size cover
+
+.btn-primary
+    background-color #754c29
+    background-image linear-gradient(to bottom, #a67e5a, #754c29)
+    background-size 100% 200%
+    border-color rgba(0,0,0,0.1) rgba(0,0,0,0.1) rgba(0,0,0,0.25)
+    color #fff
+    text-shadow 0 -1px 0 rgba(0,0,0,0.25)
+
+    &:hover
+        background-position: 0 100%;
+
+.btn-small
+    padding 2px 8px
+    font-size 11.5px
+    margin-top 0
