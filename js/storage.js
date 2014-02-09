@@ -10,7 +10,8 @@ storage.saveUserState = function (user) {
 
 storage.resetAndGetUser = function () {
 	var user = JSON.parse(localStorage.getItem('user'));
-	localStorage.setItem('user', JSON.stringify({noLevels: 0,  achievements: user.achievements}));
+	user.topScores.push(user.totalScore);
+	localStorage.setItem('user', JSON.stringify({noLevels: 0, achievements: user.achievements, totalScore: 0, topScores: user.topScores}));
 	return JSON.parse(localStorage.getItem('user'));
 };
 

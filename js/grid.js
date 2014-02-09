@@ -1,4 +1,5 @@
 var Cursor = require('./cursor');
+var storage = require('./storage');
 
 var Grid = function (options) {
     var self = this,
@@ -18,13 +19,16 @@ var Grid = function (options) {
 
     $(document).on('cursorPlaced.levelEvent', function (event, data) {
         var tile = tiles[data.row][data.col];
+        var user = storage.getUser();        
 
         $('.selected').removeClass('selected');
         if (!tile.visited) {
             score += tile.value;
+            user.totalScore += tile.value;
 
             if (tile.points) {
                 score += tile.points;
+                user.totalScore += tile.points;
             }
         }
 
@@ -32,9 +36,12 @@ var Grid = function (options) {
         // tile.visited = true; // Redundant? It's done in clearTile().
         tile.$el.html('');
         tile.$el.addClass('visited selected');
+        
+        storage.saveUserState(user);
 
         $('.game-score').text(score);
         $('.game-moves').text(moves);
+        $('.total-score').text(user.totalScore);
     });
 
     function createTileElement(row, col) {

@@ -7,7 +7,7 @@ $('#startGame').on('click', function() {
     if (localStorage && storage.getUser()) {
         user = storage.getUser();
     } else {
-        user = {noLevels: 0, achievements: []};
+        user = {noLevels: 0, achievements: [], totalScore: 0, topScores: []};
         storage.saveUserState(user);
     }
 
