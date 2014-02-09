@@ -118,14 +118,26 @@ var Game = function (options) {
             user.noLevels++;
             storage.saveUserState(user);
 
-            notification.modal({
-                title: 'Argggghh!',
-                message: 'You have found the booty and conquered this sea!  On to the Next!',
-                buttonText: 'Next Level',
-                clickHandler: function () {
-                    self.startLevel(user.noLevels);
-                }
-            });
+            if (user.noLevels === templates.length) {
+                notification.modal({
+                    title: 'Arrrrr ye be one fair pirate!',
+                    message: 'Ye have completed all levels matey!  Click on Restart Game to reset your game and see if you can top your high score!  Your achievements will persist.',
+                    buttonText: 'Restart Game',
+                    clickHandler: function () {
+                        newUser = storage.resetAndGetUser();
+                        self.startLevel(newUser.noLevels);
+                    }
+                });
+            } else {
+                notification.modal({
+                    title: 'Argggghh!',
+                    message: 'You have found the booty and conquered this sea!  On to the Next!',
+                    buttonText: 'Next Level',
+                    clickHandler: function () {
+                        self.startLevel(user.noLevels);
+                    }
+                });
+            }
         }
     });
 };
