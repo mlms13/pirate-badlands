@@ -83,7 +83,7 @@ game.startGame = function (level) {
         }
     });
     game.grid.createGrid(templates[level]).draw();
-    notification.show({
+    notification.alert({
         type: 'success',
         title: 'Ready to rock?',
         message: 'You better be, because a game is totally starting.'
@@ -92,7 +92,7 @@ game.startGame = function (level) {
     $(document).on('cursorEnded', function (event, data) {
         if (game.grid.getTileByIndex(data.row, data.col).endGame) {
             console.log('end game');
-            notification.show({
+            notification.alert({
                 type: 'success',
                 title: 'Winner!',
                 message: 'You have won this level!'

@@ -3,7 +3,7 @@ var notification = {
     "$area": $('.notification-area')
 };
 
-notification.show = function (data) {
+notification.alert = function (data) {
     var $el;
 
     // default to info notifications if no type is provided
