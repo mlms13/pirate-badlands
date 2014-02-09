@@ -12,7 +12,6 @@
     clear both
     display flex
 
-
 .grid-tile
     background-repeat no-repeat
     background-size 100%
@@ -54,10 +53,9 @@
 
 // the cursor element is separate from the tiles, but still part of the grid
 .cursor
-    background-image url('../images/pirate_ship_small.png')
+    background rgba(200, 30, 30, 0.5)
     height 57px // matching the visible height of the tiles
     margin-top -26px // 8px more than the tile's margin-top because the tile has transparent pixels at the top
-    margin-left: 25px // centers the ship
     position absolute
     transition top 60ms linear, left 60ms linear
     width 70px
