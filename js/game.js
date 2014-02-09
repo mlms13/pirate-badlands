@@ -73,7 +73,7 @@ var Game = function (options) {
                 notification.alert({type: 'danger', message: "Arrg, moving there would run yer ship ashore, mate."});
                 return false;
             } else {
-                // move the cursor to the down
+                // move the cursor down
                 return 's';
             }
         }
