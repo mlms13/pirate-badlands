@@ -98,6 +98,8 @@ var Game = function (options) {
 
         self.grid.createGrid().draw();
 
+        $(document).trigger('levelStarted');
+
         notification.alert({
             type: 'success',
             title: 'Ready to set sail first mate?',

@@ -13,7 +13,6 @@ $('#startGame').on('click', function() {
 
     game = new Game();
     game.startLevel(user.noLevels);
-    $(document).trigger('gameStarted');
 });
 
 // Handle inline styling for tiles
