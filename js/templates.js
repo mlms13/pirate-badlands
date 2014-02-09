@@ -25,7 +25,7 @@ var templates = [
             {row: 1, col: 2, value: 1, points: 20},
             {row: 4, col: 2, value: 6},
             {row: 2, col: 3, value: 3},
-            {row: 1, col: 4, value: 2},
+            {row: 1, col: 4, value: 2, points: 50},
             {row: 1, col: 5, value: 1, endGame: true}
         ]
     },
