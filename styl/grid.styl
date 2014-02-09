@@ -49,11 +49,15 @@
         background-image url('../images/land-chest-open.png')
 
 .selected
-    opacity 0.75
+    // opacity 0.75
 
 // the cursor element is separate from the tiles, but still part of the grid
 .cursor
-    background rgba(200, 30, 30, 0.5)
+    background-image url('../images/pirate_ship_small.png')
+    background-position 50% 0
+    background-repeat no-repeat
+    background-size 70%
+    cursor pointer
     height 57px // matching the visible height of the tiles
     margin-top -26px // 8px more than the tile's margin-top because the tile has transparent pixels at the top
     position absolute
