@@ -3,6 +3,7 @@ var Grid = require('./grid');
 var templates = require('./templates');
 var notification = require('./notifications');
 var storage = require('./storage');
+var tutorial = require('./tutorial');
 
 // Game constructor
 var Game = function (options) {
@@ -98,6 +99,8 @@ var Game = function (options) {
                     error = false,
                     tilesToVisit = [];
 
+                tutorial.hideAllMessages();
+
                 if (direction) {
                     cursor.getPath(direction, clicked.value, function (coords) {
                         tile = self.grid.getTileByIndex(coords.row, coords.col);
@@ -122,6 +125,10 @@ var Game = function (options) {
         self.grid.createGrid().draw();
 
         $(document).trigger('levelStarted');
+
+        if (level === 0) {
+            tutorial.messages['move-ship'].show(self.grid.getTileByIndex(4, 2).$el);
+        }
 
         notification.alert({
             type: 'success',
