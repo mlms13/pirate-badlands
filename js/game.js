@@ -4,6 +4,7 @@ var templates = require('./templates');
 var notification = require('./notifications');
 var storage = require('./storage');
 var tutorial = require('./tutorial');
+var achievements = require('./achievements');
 
 // Game constructor
 var Game = function (options) {
@@ -150,12 +151,14 @@ var Game = function (options) {
             user.noLevels++;
             storage.saveUserState(user);
 
+            console.log('right before the event..');
+
+            $(document).trigger('levelCompleted');
+
             $('#resetGame').text('Next Level');
 
             if (user.noLevels === templates.length) {
                 var topMessage;
-
-                console.log(getMaxOfArray(user.topScores));
 
                 if (user.totalScore > getMaxOfArray(user.topScores)) {
                     topMessage = "That's good enough to beat your high score! Nice Job!";
@@ -175,9 +178,15 @@ var Game = function (options) {
                     }
                 });
             } else {
+                var achievementsObtained;
+
+                if (user.noLevels === 1 && user.topScores.length === 1) {
+                    achievementsObtained = 'Swiggity Swooty I\'m coming for that booty!'
+                }
+
                 notification.modal({
                     title: 'Argggghh!',
-                    message: 'You have found the booty and conquered this sea!  On to the Next!',
+                    message: 'You have found the booty and conquered this sea!  On to the Next! This round you unlocked the following acheivements: ' + achievementsObtained,
                     buttonText: 'Next Level',
                     clickHandler: function () {
                         self.startLevel(user.noLevels);
