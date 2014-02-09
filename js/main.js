@@ -33,5 +33,10 @@ function inlineStyles() {
     if ( $('#inlineCSS').length === 0 ) {
         $('head').append('<style id="inlineCSS" />');
     }
-    $('#inlineCSS').html('.grid-tile { height:' + elHeight + 'px; line-height:' + (elHeight * 0.70) + 'px; margin-top: -' + (elHeight * 0.37) + 'px } .grid-tile:hover { top: -' + (elHeight * 0.077) + 'px }</style>');
+    $('#inlineCSS').html(
+        '.grid-tile {' +
+            'height:' + elHeight + 'px;' +
+            'line-height:' + (elHeight * 0.70) + 'px;' +
+            'margin-top: -' + (elHeight * 0.37) + 'px }' +
+        '.grid-tile:hover { top: -' + (elHeight * 0.077) + 'px }');
 }
