@@ -1,8 +1,8 @@
-var game = require('./game');
+var Game = require('./game');
 var storage = require('./storage');
 
 $('#startGame').on('click', function() {
-    var user;
+    var user, game;
 
     if (localStorage && storage.getUser()) {
         user = storage.getUser();
@@ -11,7 +11,8 @@ $('#startGame').on('click', function() {
         storage.saveUserState(user);
     }
 
-    game.startGame(user.noLevels);
+    game = new Game(user.noLevels);
+    game.start();
     $(document).trigger('gameStarted');
 });
 
