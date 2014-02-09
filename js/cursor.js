@@ -8,7 +8,7 @@ var Cursor = function (options) {
         // update the cursor's position
         this.row = coords.row;
         this.col = coords.col;
-        console.log('placing the cursor...');
+        // console.log('placing the cursor...');
         $(document).trigger('cursorPlaced', coords);
     };
 
