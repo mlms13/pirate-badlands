@@ -11,6 +11,10 @@ $('#startGame').on('click', function() {
         storage.saveUserState(user);
     }
 
+    $('#resetGame').on('click', function() {
+        game.startLevel(storage.getUser().noLevels);
+    });
+
     game = new Game();
     game.startLevel(user.noLevels);
 });

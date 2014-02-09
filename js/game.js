@@ -87,6 +87,8 @@ var Game = function (options) {
         // Clear level event handlers
         $(document).off('.levelEvent');
 
+        $('#resetGame').css('visibility', 'visible');
+
         self.grid = new Grid({
             template: templates[level],
             clickTile: function (cursor, tile) {
