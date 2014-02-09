@@ -4,20 +4,33 @@ var Grid = function (options) {
     var self = this,
         cursor = new Cursor(options.cursor),
         tiles = [], // an array of tile objects
-        score = 0;
+        score = 0,
+        moves = -1; // So our initial placement gets it to 0
 
     this.height = options.height;
     this.width = options.width;
 
     // listen for global events
     $(document).on('cursorPlaced', function (event, data) {
+        var tile = tiles[data.row][data.col];
+
         $('.cursor').removeClass('cursor');
-        tiles[data.row][data.col].clearTile();
-        tiles[data.row][data.col].visited = true;
-        tiles[data.row][data.col].$el.html('');
-        tiles[data.row][data.col].$el.addClass('visited cursor');
+        if (!tile.visited) {
+            score += tile.value;
+
+            if (tile.points) {
+                score += tile.points;
+            }
+        }
+        moves += 1;
+
+        tile.clearTile();
+        // tile.visited = true; // Redundant? It's done in clearTile().
+        tile.$el.html('');
+        tile.$el.addClass('visited cursor');
 
         $('.game-score').text(score);
+        $('.game-moves').text(moves);
     });
 
     function createTileElement(row, col) {
@@ -30,6 +43,10 @@ var Grid = function (options) {
 
         if (tile.value === -1) {
             className = 'land text-hide';
+        }
+
+        if (tile.points) {
+            className = 'flotsam text-hide';
         }
 
         return $('<div class="grid-tile ' + className + ' ">' + tile.value + '</div>')
@@ -52,7 +69,6 @@ var Grid = function (options) {
                     row: i,
                     col: j,
                     clearTile: function() {
-                        if (!this.visited) score += this.value;
                         this.visited = true;
                         this.value = 1;
                     }
