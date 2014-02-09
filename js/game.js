@@ -14,25 +14,25 @@ var Game = function (options) {
     function validateClick(cursor, tile) {
         // invalid if you click on current cursor
         if (tile.row === cursor.row && tile.col === cursor.col) { 
-            notification.alert({type: 'danger', message: 'Try clicking a tile next to your ship.'});
+            notification.alert({type: 'danger', message: 'Arrgghhhh. This be \'yer ship, matey.'});
             return false;
         }
 
         // make sure the row is within one
         if (Math.abs(cursor.row - tile.row) > 1) { 
-            notification.alert({type: 'danger', message: 'Try clicking a tile next to your ship.'});
+            notification.alert({type: 'danger', message: 'Arrgh, see about clicking a tile closer to ye port side.'});
             return false;
         }
 
         // make sure the column is within one
         if (Math.abs(cursor.col - tile.col) > 1) { 
-            notification.alert({type: 'danger', message: 'Try clicking a tile next to your ship.'});
+            notification.alert({type: 'danger', message: 'Arrrr, Try clicking a tile next to \'yer ship.'});
             return false;
         }
 
         // make sure the clicked tile wasn't a diagonal
         if (cursor.col !== tile.col && cursor.row !== tile.row) { 
-            notification.alert({type: 'danger', message: "Your ship doesn't know how to move diagonally."});
+            notification.alert({type: 'danger', message: "\'Yer ship doesn\'t know how to move on the \'ol diagonal, mate."});
             return false;
         }
 
@@ -94,8 +94,8 @@ var Game = function (options) {
 
         notification.alert({
             type: 'success',
-            title: 'Ready to rock?',
-            message: 'You better be, because a game is totally starting.'
+            title: 'Ready to set sail first mate?',
+            message: 'All hands on deck, we sail at once for ye Booty!.'
         });
 
         $(document).on('cursorEnded', function (event, data) {
@@ -103,8 +103,8 @@ var Game = function (options) {
                 console.log('end game');
                 notification.alert({
                     type: 'success',
-                    title: 'Winner!',
-                    message: 'You have won this level!'
+                    title: 'Argggghh!',
+                    message: 'You have found the booty and conquered this sea!  On to the Next!'
                 });
 
                 // increment noLevels, give option to start next game
