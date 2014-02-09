@@ -14,7 +14,7 @@ var Grid = function (options) {
     $(document).on('cursorPlaced', function (event, data) {
         var tile = tiles[data.row][data.col];
 
-        $('.cursor').removeClass('cursor');
+        $('.selected').removeClass('selected');
         if (!tile.visited) {
             score += tile.value;
 
@@ -27,7 +27,7 @@ var Grid = function (options) {
         tile.clearTile();
         // tile.visited = true; // Redundant? It's done in clearTile().
         tile.$el.html('');
-        tile.$el.addClass('visited cursor');
+        tile.$el.addClass('visited selected');
 
         $('.game-score').text(score);
         $('.game-moves').text(moves);
