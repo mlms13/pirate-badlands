@@ -6,6 +6,7 @@
 .grid
     margin 34px auto 0
     max-width 420px
+    position relative
 
 .grid-row
     clear both
@@ -46,3 +47,12 @@
 
 .selected
     opacity 0.75
+
+// the cursor element is separate from the tiles, but still part of the grid
+.cursor
+    background rgba(200, 30, 30, 0.5)
+    height 57px // matching the visible height of the tiles
+    margin-top -26px // 8px more than the tile's margin-top because the tile has transparent pixels at the top
+    position absolute
+    transition top 60ms linear, left 60ms linear
+    width 70px

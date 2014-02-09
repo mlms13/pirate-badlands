@@ -1,14 +1,35 @@
 var Cursor = function (options) {
-    var self = this;
+    var self = this,
+        $el = null;
 
     this.row = options.row;
     this.col = options.col;
+
+    this.drawElement = function ($parent) {
+        $el = $('<div class="cursor" />').appendTo($parent);
+    };
+
+    this.moveElement = function (coords) {
+        // get the height and width of the element (which should match the size of each tile)
+        var height = $el.height(),
+            width = $el.width();
+
+        console.log(height);
+
+        $el.css({
+            top: (coords.row * height) + 'px',
+            left: (coords.col * width) + 'px'
+        });
+    };
 
     this.place = function (coords) {
         // TODO: add functionality that states if you land at some point on land (value = -1), go back to starting position and trigger notification
         // update the cursor's position
         this.row = coords.row;
         this.col = coords.col;
+
+        self.moveElement(coords);
+
         $(document).trigger('cursorPlaced', coords);
     };
 

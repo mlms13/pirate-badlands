@@ -107,7 +107,12 @@ var Grid = function (options) {
         }
 
         // draw the cursor according to the options passed to the grid constructor
-        cursor.place(options.cursor);
+        cursor.drawElement($grid);
+
+        // make sure the element has been drawn before placing the cursor
+        window.setTimeout(function () {
+            cursor.place(options.cursor);
+        }, 0);
 
         $grid.appendTo($parent || $('#game-board'));
 
