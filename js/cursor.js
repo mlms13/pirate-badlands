@@ -1,15 +1,35 @@
 var Cursor = function (options) {
-    var self = this;
+    var self = this,
+        $el = null;
 
     this.row = options.row;
     this.col = options.col;
+
+    this.drawElement = function ($parent) {
+        $el = $('<div class="cursor" />').appendTo($parent);
+    };
+
+    this.moveElement = function (coords) {
+        // get the height and width of the element (which should match the size of each tile)
+        var height = $el.height(),
+            width = $el.width();
+
+        console.log(height);
+
+        $el.css({
+            top: (coords.row * height) + 'px',
+            left: (coords.col * width) + 'px'
+        });
+    };
 
     this.place = function (coords) {
         // TODO: add functionality that states if you land at some point on land (value = -1), go back to starting position and trigger notification
         // update the cursor's position
         this.row = coords.row;
         this.col = coords.col;
-        // console.log('placing the cursor...');
+
+        self.moveElement(coords);
+
         $(document).trigger('cursorPlaced', coords);
     };
 
@@ -53,12 +73,25 @@ var Cursor = function (options) {
         this.visitTiles(pitStops);
     };
 
-    this.visitTiles = function(tilesToVisit) {
+    this.visitTiles = function(tiles, index) {
         // TODO: add something that stops the cursor from going on land
-        tilesToVisit.forEach(function (tile) {
-            self.place(tile);
-        });
-        $(document).trigger('cursorEnded', tilesToVisit[tilesToVisit.length - 1]);
+        // Techincally we already check for this back in the game logic.
+        // But if we want to, we could move that check here (or re-check).
+
+        index = index || 0;
+
+        if (index >= tiles.length) {
+            // let everyone know we've reached the end
+            $(document).trigger('cursorEnded', tiles[tiles.length - 1]);
+            return;
+        }
+        // place the cursor on the tile
+        self.place(tiles[index]);
+
+        // then, after a short timeout, do it all over again with the next tile
+        window.setTimeout(function () {
+            self.visitTiles(tiles, index + 1);
+        }, 80);
     };
 };
 

@@ -14,7 +14,7 @@ var Grid = function (options) {
     $(document).on('cursorPlaced', function (event, data) {
         var tile = tiles[data.row][data.col];
 
-        $('.cursor').removeClass('cursor');
+        $('.selected').removeClass('selected');
         if (!tile.visited) {
             score += tile.value;
 
@@ -27,7 +27,7 @@ var Grid = function (options) {
         tile.clearTile();
         // tile.visited = true; // Redundant? It's done in clearTile().
         tile.$el.html('');
-        tile.$el.addClass('visited cursor');
+        tile.$el.addClass('visited selected');
 
         $('.game-score').text(score);
         $('.game-moves').text(moves);
@@ -107,7 +107,12 @@ var Grid = function (options) {
         }
 
         // draw the cursor according to the options passed to the grid constructor
-        cursor.place(options.cursor);
+        cursor.drawElement($grid);
+
+        // make sure the element has been drawn before placing the cursor
+        window.setTimeout(function () {
+            cursor.place(options.cursor);
+        }, 0);
 
         $grid.appendTo($parent || $('#game-board'));
 
