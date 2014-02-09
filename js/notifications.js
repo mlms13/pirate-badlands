@@ -35,4 +35,23 @@ notification.alert = function (data) {
     notification.list.push(data);
 };
 
+notification.modal = function (data) {
+    var $el;
+
+    $el = $('<div class="modal fade" role="dialog" id="modal" />')
+                .append($('<div class="modal-dialog"><div class="modal-content"></div></div>'));
+
+    if (data.header) {
+        $el.append($('<div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel">' + data.header + '</h4></div>'));
+    }
+
+    $el.append($('<div class="modal-body">' + data.body + '</div>'));
+
+    $el.append($('<div class="modal-footer"><button type="button" class="btn btn-primary">Next Level</button>'));
+
+    $el.appendTo($('body'));
+
+    $('#modal').modal('show');
+};
+
 module.exports = notification;
