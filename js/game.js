@@ -87,7 +87,7 @@ var Game = function (options) {
         // Clear level event handlers
         $(document).off('.levelEvent');
 
-        $('#resetGame').css('visibility', 'visible');
+        $('#resetGame').css('visibility', 'visible').text('Reset Game');
 
         self.grid = new Grid({
             template: templates[level],
