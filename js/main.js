@@ -4,6 +4,8 @@ var storage = require('./storage');
 $('#startGame').on('click', function() {
     var user, game;
 
+    $('#game-board').empty();
+
     if (localStorage && storage.getUser()) {
         user = storage.getUser();
     } else {
