@@ -5,6 +5,7 @@ var Cursor = function (options) {
     this.col = options.col;
 
     this.place = function (coords) {
+        // TODO: add functionality that states if you land at some point on land (value = -1), go back to starting position and trigger notification
         // update the cursor's position
         this.row = coords.row;
         this.col = coords.col;
