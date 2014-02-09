@@ -3,7 +3,8 @@ var Cursor = require('./cursor');
 var Grid = function (options) {
     var self = this,
         cursor = new Cursor(options.cursor),
-        tiles = []; // an array of tile objects
+        tiles = [], // an array of tile objects
+        score = 0;
 
     this.height = options.height;
     this.width = options.width;
@@ -15,6 +16,8 @@ var Grid = function (options) {
         tiles[data.row][data.col].visited = true;
         tiles[data.row][data.col].$el.html('');
         tiles[data.row][data.col].$el.addClass('visited cursor');
+
+        $('.game-score').text(score);
     });
 
     function createTileElement(row, col) {
@@ -22,7 +25,11 @@ var Grid = function (options) {
         var className = 'water';
 
         if (tile.endGame) {
-            className = 'booty';
+            className = 'booty text-hide';
+        }
+
+        if (tile.value === -1) {
+            className = 'land text-hide';
         }
 
         return $('<div class="grid-tile ' + className + ' ">' + tile.value + '</div>')
@@ -46,6 +53,7 @@ var Grid = function (options) {
                     col: j,
                     clearTile: function() {
                         this.visited = true;
+                        score += this.value;
                         this.value = 1;
                     }
                 });
@@ -58,6 +66,9 @@ var Grid = function (options) {
                 tiles[tile.row][tile.col][prop] = tile[prop];
             }
         });
+
+        // Erase the value from the starting cursor position
+        tiles[template.startPos.row][template.startPos.col].value = 0;
 
         return self;
     };
