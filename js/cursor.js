@@ -9,7 +9,6 @@ var Cursor = function (options) {
         // update the cursor's position
         this.row = coords.row;
         this.col = coords.col;
-        // console.log('placing the cursor...');
         $(document).trigger('cursorPlaced', coords);
     };
 
@@ -53,12 +52,25 @@ var Cursor = function (options) {
         this.visitTiles(pitStops);
     };
 
-    this.visitTiles = function(tilesToVisit) {
+    this.visitTiles = function(tiles, index) {
         // TODO: add something that stops the cursor from going on land
-        tilesToVisit.forEach(function (tile) {
-            self.place(tile);
-        });
-        $(document).trigger('cursorEnded', tilesToVisit[tilesToVisit.length - 1]);
+        // Techincally we already check for this back in the game logic.
+        // But if we want to, we could move that check here (or re-check).
+
+        index = index || 0;
+
+        if (index >= tiles.length) {
+            // let everyone know we've reached the end
+            $(document).trigger('cursorEnded', tiles[tiles.length - 1]);
+            return;
+        }
+        // place the cursor on the tile
+        self.place(tiles[index]);
+
+        // then, after a short timeout, do it all over again with the next tile
+        window.setTimeout(function () {
+            self.visitTiles(tiles, index + 1);
+        }, 80);
     };
 };
 
