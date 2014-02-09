@@ -52,6 +52,7 @@
     // opacity 0.75
 
 // the cursor element is separate from the tiles, but still part of the grid
+// TODO: figure out how to have a hover effect even though we disable pointer-events
 .cursor
     background-image url('../images/pirate_ship_small.png')
     background-position 50% 0
@@ -60,6 +61,7 @@
     cursor pointer
     height 57px // matching the visible height of the tiles
     margin-top -26px // 8px more than the tile's margin-top because the tile has transparent pixels at the top
+    pointer-events none // Have clicks pass through to grid
     position absolute
     transition top 60ms linear, left 60ms linear
     width 70px

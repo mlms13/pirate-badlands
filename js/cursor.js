@@ -14,7 +14,7 @@ var Cursor = function (options) {
         var height = $el.height(),
             width = $el.width();
 
-        console.log(height);
+        // console.log(height);
 
         $el.css({
             top: (coords.row * height) + 'px',
@@ -29,6 +29,10 @@ var Cursor = function (options) {
         this.col = coords.col;
 
         self.moveElement(coords);
+
+        $(window).on('resize', function() {
+            self.moveElement(coords);
+        });
 
         $(document).trigger('cursorPlaced', coords);
     };
@@ -82,7 +86,7 @@ var Cursor = function (options) {
 
         if (index === 0) {
             // let everyone know we've started moving the cursor
-            $(document).trigger('cursorStarted', tiles[0]);
+            $(document).trigger('cursorStarted', tiles[index]);
         }
 
         if (index >= tiles.length) {
