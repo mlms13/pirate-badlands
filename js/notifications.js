@@ -3,6 +3,8 @@ var notification = {
     "$area": $('.notification-area')
 };
 
+// TODO: fix this so it doesn't overlay the game board if the window is small enough
+//       After the notification is faded away, we should probably put a display: none on the element
 notification.alert = function (data) {
     var $el;
 

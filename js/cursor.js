@@ -53,6 +53,7 @@ var Cursor = function (options) {
     };
 
     this.visitTiles = function(tilesToVisit) {
+        // TODO: add something that stops the cursor from going on land
         tilesToVisit.forEach(function (tile) {
             self.place(tile);
         });

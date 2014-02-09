@@ -76,6 +76,7 @@ var Game = function (options) {
     }
 
     this.start = function () {
+        // TODO: Add a class to the page if the template is bigger than 9 tiles wide?
         self.grid = new Grid({
             cursor: templates[options.level].startPos,
             height: templates[options.level].height,
@@ -108,6 +109,8 @@ var Game = function (options) {
                 });
 
                 // increment noLevels, give option to start next game
+                // TODO: add modal window for next game (looks done, but needs to be implemented)
+                // TODO: when noLevels = templates.length then end the game and post high score or some shit.
                 var user = storage.getUser();
                 user.noLevels++;
                 storage.saveUserState(user);
