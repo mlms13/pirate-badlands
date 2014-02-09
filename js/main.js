@@ -18,19 +18,20 @@ $('#startGame').on('click', function() {
     $(document).trigger('gameStarted');
 });
 
-// Handle height for tiles
+// Handle inline styling for tiles
+// Kind of necessary since we're using ratios of height to width for basically everythng
 $(document).on('gameStarted', function () {
-    setHeight();
+    inlineStyles();
 });
 $(window).on('resize', function () {
-    setHeight();
+    inlineStyles();
 });
-function setHeight() {
+function inlineStyles() {
     var elWidth = $('.grid-tile').first().width(),
         elHeight = elWidth * 1.3;
 
-    if ( $('#inlineHeight').length === 0 ) {
-        $('head').append('<style id="inlineHeight" />');
+    if ( $('#inlineCSS').length === 0 ) {
+        $('head').append('<style id="inlineCSS" />');
     }
-    $('#inlineHeight').html('.grid-tile { height:' + elHeight + 'px; line-height:' + (elHeight * 0.70) + 'px; margin-top: -' + (elHeight * 0.37) + 'px } .grid-tile:hover { top: -' + (elHeight * 0.077) + 'px }</style>');
+    $('#inlineCSS').html('.grid-tile { height:' + elHeight + 'px; line-height:' + (elHeight * 0.70) + 'px; margin-top: -' + (elHeight * 0.37) + 'px } .grid-tile:hover { top: -' + (elHeight * 0.077) + 'px }</style>');
 }
