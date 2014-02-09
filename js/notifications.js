@@ -38,22 +38,26 @@ notification.alert = function (data) {
 };
 
 notification.modal = function (data) {
-    var $el;
-
-    $el = $('<div class="modal fade" role="dialog" id="modal" />')
-                .append($('<div class="modal-dialog"><div class="modal-content"></div></div>'));
+    var $modal = $('<div class="modal fade" />'),
+        $dialog = $('<div class="modal-dialog" />').appendTo($modal),
+        $content = $('<div class="modal-content" />').appendTo($dialog),
+        $header = $('<div class="modal-header" />')
+        $body = $('<div class="modal-body">' + data.body + '</div>'),
+        $footer = $('<div class="modal-footer" />');
 
     if (data.header) {
-        $el.append($('<div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel">' + data.header + '</h4></div>'));
+        $header.append($('<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times</button>'))
+            .append($('<h4 class="modal-title">' + data.header + '</h4>'))
+            .appendTo($content);
     }
 
-    $el.append($('<div class="modal-body">' + data.body + '</div>'));
+    $content.append($body);
+    $content.append($footer);
+    $('<button class="btn btn-info data-dismiss="modal">' + data.buttonText + '</button>').on('click', function () {
+        data.clickHandler();
+    }).appendTo($footer);
 
-    $el.append($('<div class="modal-footer"><button type="button" class="btn btn-primary">Next Level</button>'));
-
-    $el.appendTo($('body'));
-
-    $('#modal').modal('show');
+    $modal.appendTo($('body')).modal('show');
 };
 
 module.exports = notification;
