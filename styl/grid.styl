@@ -9,11 +9,15 @@
 
 .grid-row
     clear both
-    float left
+    display flex
 
 .grid-tile
+    background-repeat no-repeat
+    background-size 100%
     cursor pointer
+    flex 1
     float left
+    font-family sans-serif
     height 91px
     line-height 57px
     margin-top -34px
@@ -24,12 +28,14 @@
         top -7px
 
 .water
-    background url('../images/water.png') no-repeat
+    background-image url('../images/water.png')
     color #fff
-    font-family sans-serif
 
 .visited
-    opacity 0.25
+    background-image url('../images/water_dark.png')
+
+.booty
+    background-image url('../images/land-chest.png')
 
 .cursor
     opacity 0.75

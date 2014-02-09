@@ -16,17 +16,18 @@ $('#startGame').on('click', function() {
 });
 
 // Handle height for tiles
-// $(document).on('gameStarted', function () {
-//     setHeight();
-// });
-// $(window).on('resize', function () {
-//     setHeight();
-// });
-// function setHeight() {
-//     var elWidth = $('.grid-tile').first().width();
+$(document).on('gameStarted', function () {
+    setHeight();
+});
+$(window).on('resize', function () {
+    setHeight();
+});
+function setHeight() {
+    var elWidth = $('.grid-tile').first().width(),
+        elHeight = elWidth * 1.3;
 
-//     if ( $('#inlineHeight').length === 0 ) {
-//         $('head').append('<style id="inlineHeight" />');
-//     }
-//     $('#inlineHeight').html('.grid-tile { height:' + elWidth + 'px }</style>');
-// }
+    if ( $('#inlineHeight').length === 0 ) {
+        $('head').append('<style id="inlineHeight" />');
+    }
+    $('#inlineHeight').html('.grid-tile { height:' + elHeight + 'px; line-height:' + (elHeight * 0.70) + 'px; margin-top: -' + (elHeight * 0.37) + 'px } .grid-tile:hover { top: -' + (elHeight * 0.077) + 'px }</style>');
+}
