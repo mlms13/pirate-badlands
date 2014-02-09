@@ -53,7 +53,7 @@ notification.modal = function (data) {
 
     $content.append($body);
     $content.append($footer);
-    $('<button class="btn btn-info data-dismiss="modal">' + data.buttonText + '</button>').on('click', function () {
+    $('<button class="btn btn-info" data-dismiss="modal">' + data.buttonText + '</button>').on('click', function () {
         data.clickHandler();
     }).appendTo($footer);
 

@@ -108,22 +108,35 @@ var Game = function (options) {
                 //       It would be cool if we had the pirate ship one block away so we can see the open treasure chest.
                 self.grid.getTileByIndex(data.row, data.col).$el.addClass('open');
 
-                console.log('end game');
-                notification.modal({
-                    title: 'Argggghh!',
-                    message: 'You have found the booty and conquered this sea!  On to the Next!',
-                    buttonText: 'Next Level',
-                    clickHandler: function () {
-                        alert('Starting the next level');
-                    }
-                });
-
                 // increment noLevels, give option to start next game
                 // TODO: add modal window for next game (looks done, but needs to be implemented)
                 // TODO: when noLevels = templates.length then end the game and post high score or some shit.
                 var user = storage.getUser();
                 user.noLevels++;
                 storage.saveUserState(user);
+
+                notification.modal({
+                    title: 'Argggghh!',
+                    message: 'You have found the booty and conquered this sea!  On to the Next!',
+                    buttonText: 'Next Level',
+                    clickHandler: function (modal) {
+                        $('#game-board').empty();
+                        self.grid = new Grid({
+                            cursor: templates[options.level].startPos,
+                            template: templates[user.noLevels],
+                            clickTile: function (cursor, tile) {
+                                var isValid = validateClick(cursor, tile),
+                                    direction = isValid && getDirection(cursor, tile);
+
+                                if (direction) {
+                                    cursor.definePath(direction, tile.value);
+                                }
+                            }
+                        });
+
+                        self.grid.createGrid().draw();
+                    }
+                });
             }
         });
     };
