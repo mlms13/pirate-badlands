@@ -52,8 +52,8 @@ var Grid = function (options) {
                     row: i,
                     col: j,
                     clearTile: function() {
+                        if (!this.visited) score += this.value;
                         this.visited = true;
-                        score += this.value;
                         this.value = 1;
                     }
                 });
