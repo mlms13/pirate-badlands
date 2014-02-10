@@ -178,15 +178,10 @@ var Game = function (options) {
                     }
                 });
             } else {
-                var achievementsObtained;
-
-                if (user.noLevels === 1 && user.topScores.length === 1) {
-                    achievementsObtained = 'Swiggity Swooty I\'m coming for that booty!'
-                }
 
                 notification.modal({
                     title: 'Argggghh!',
-                    message: 'You have found the booty and conquered this sea!  On to the Next! This round you unlocked the following acheivements: ' + achievementsObtained,
+                    message: 'You have found the booty and conquered this sea!  On to the Next!',
                     buttonText: 'Next Level',
                     clickHandler: function () {
                         self.startLevel(user.noLevels);
