@@ -1,8 +1,7 @@
 ###################
-## Static Showdown
+## Node Stuff
 ###################
 node_modules/
-*.css
 
 #################
 ## Eclipse
