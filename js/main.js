@@ -4,15 +4,17 @@ var storage = require('./storage');
 $('#startGame').on('click', function() {
     var user, game;
 
-    if (localStorage && storage.getData('user')) {
-        user = storage.getData('user');
-    } else {
-        user = {noLevels: 0, achievements: [], totalScore: 0, topScores: [0]};
-        storage.saveUserState(user);
+    if (localStorage && !storage.getData('user')) {
+        storage.setData('user', 'noLevels', 0);
+        storage.setData('user', 'achievements', []);
+        storage.setData('user', 'totalScore', 0);
+        storage.setData('user', 'topScores', [0]);
     }
 
+    user = storage.getData('user');
+
     $('#resetGame').on('click', function() {
-        game.startLevel(storage.getData('user').noLevels);
+        game.startLevel(storage.getData('user', 'noLevels'));
     });
 
     game = new Game();
