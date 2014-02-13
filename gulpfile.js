@@ -20,13 +20,12 @@ gulp.task('lint', function () {
 });
 
 gulp.task('js', function () {
-    var browserify = require('gulp-browserify');
+    var browserify = require('browserify'),
+        fs = require('fs');
 
-    gulp.src('./js/main.js')
-        .pipe(browserify({
-          insertGlobals : true
-        }))
-        .pipe(gulp.dest('./build/js'))
+    browserify('./js/main.js')
+        .bundle()
+        .pipe(fs.createWriteStream('build/js/main.js'));
 });
 
 gulp.task('duplicator', function () {
