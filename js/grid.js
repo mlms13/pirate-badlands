@@ -19,16 +19,16 @@ var Grid = function (options) {
 
     $(document).on('cursorPlaced.levelEvent', function (event, data) {
         var tile = tiles[data.row][data.col];
-        var user = storage.getUser();        
+        var totalScore = storage.getData('user', 'totalScore');
 
         $('.selected').removeClass('selected');
         if (!tile.visited) {
             score += tile.value;
-            user.totalScore += tile.value;
+            totalScore += tile.value;
 
             if (tile.points) {
                 score += tile.points;
-                user.totalScore += tile.points;
+                totalScore += tile.points;
             }
         }
 
@@ -37,11 +37,11 @@ var Grid = function (options) {
         tile.$el.html('');
         tile.$el.addClass('visited selected');
         
-        storage.saveUserState(user);
+        storage.setData('user', 'totalScore', totalScore);
 
         $('.game-score').text(score);
         $('.game-moves').text(moves);
-        $('.total-score').text(user.totalScore);
+        $('.total-score').text(totalScore);
     });
 
     function createTileElement(row, col) {

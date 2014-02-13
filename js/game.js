@@ -145,13 +145,10 @@ var Game = function (options) {
             self.grid.getTileByIndex(data.row, data.col).$el.addClass('open');
 
             // increment noLevels, give option to start next game
-            // TODO: add modal window for next game (looks done, but needs to be implemented)
-            // TODO: when noLevels = templates.length then end the game and post high score or some shit.
-            var user = storage.getUser();
-            user.noLevels++;
-            storage.saveUserState(user);
+            var user = storage.getData('user');
+			storage.setData('user', 'noLevels', user.noLevels += 1);
 
-            console.log('right before the event..');
+            // console.log('right before the event..');
 
             $(document).trigger('levelCompleted');
 
