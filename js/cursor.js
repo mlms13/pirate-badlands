@@ -23,7 +23,6 @@ var Cursor = function (options) {
     };
 
     this.place = function (coords) {
-        // TODO: add functionality that states if you land at some point on land (value = -1), go back to starting position and trigger notification
         // update the cursor's position
         this.row = coords.row;
         this.col = coords.col;
@@ -87,9 +86,6 @@ var Cursor = function (options) {
     };
 
     this.visitTiles = function(tiles, index) {
-        // TODO: add something that stops the cursor from going on land
-        // Techincally we already check for this back in the game logic.
-        // But if we want to, we could move that check here (or re-check).
 
         index = index || 0;
 

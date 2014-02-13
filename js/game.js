@@ -14,25 +14,25 @@ var Game = function (options) {
     // helper validation functions (the rules of the game)
     function validateClick(cursor, tile) {
         // invalid if you click on current cursor
-        if (tile.row === cursor.row && tile.col === cursor.col) { 
+        if (tile.row === cursor.row && tile.col === cursor.col) {
             notification.alert({type: 'danger', message: 'Arrgghhhh. This be \'yer ship, matey.'});
             return false;
         }
 
         // make sure the row is within one
-        if (Math.abs(cursor.row - tile.row) > 1) { 
+        if (Math.abs(cursor.row - tile.row) > 1) {
             notification.alert({type: 'danger', message: 'Arrgh, see about clicking a tile closer to ye port side.'});
             return false;
         }
 
         // make sure the column is within one
-        if (Math.abs(cursor.col - tile.col) > 1) { 
+        if (Math.abs(cursor.col - tile.col) > 1) {
             notification.alert({type: 'danger', message: 'Arrrr, try clicking a tile next to \'yer ship.'});
             return false;
         }
 
         // make sure the clicked tile wasn't a diagonal
-        if (cursor.col !== tile.col && cursor.row !== tile.row) { 
+        if (cursor.col !== tile.col && cursor.row !== tile.row) {
             notification.alert({type: 'danger', message: "\'Yer ship doesn\'t know how to move on the ol' diagonal, mate."});
             return false;
         }
@@ -146,7 +146,7 @@ var Game = function (options) {
 
             // increment noLevels, give option to start next game
             var user = storage.getData('user');
-			storage.setData('user', 'noLevels', user.noLevels += 1);
+            storage.setData('user', 'noLevels', user.noLevels += 1);
 
             // console.log('right before the event..');
 

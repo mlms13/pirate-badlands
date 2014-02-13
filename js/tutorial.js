@@ -25,7 +25,7 @@ tutorial.hideAllMessages = function () {
     var message;
 
     for (message in tutorial.messages) {
-            tutorial.messages[message].hide();
+        tutorial.messages[message].hide();
     }
 };
 

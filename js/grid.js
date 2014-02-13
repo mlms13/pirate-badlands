@@ -36,7 +36,7 @@ var Grid = function (options) {
         // tile.visited = true; // Redundant? It's done in clearTile().
         tile.$el.html('');
         tile.$el.addClass('visited selected');
-        
+
         storage.setData('user', 'totalScore', totalScore);
 
         $('.game-score').text(score);
