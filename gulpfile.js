@@ -21,11 +21,17 @@ gulp.task('lint', function () {
 
 gulp.task('js', function () {
     var browserify = require('browserify'),
+        uglify = require('uglify-js'),
         fs = require('fs');
 
-    browserify('./js/main.js')
-        .bundle()
-        .pipe(fs.createWriteStream('build/js/main.js'));
+    browserify('./js/main.js').bundle(null, function (err, src) {
+        var uglified = uglify.minify(src, {
+            fromString: true,
+            mangle: true
+        });
+
+        fs.writeFile('./build/js/main.js', uglified.code);
+    });
 });
 
 gulp.task('duplicator', function () {
@@ -37,7 +43,7 @@ gulp.task('duplicator', function () {
         .pipe(gulp.dest('./build/images'));
 });
 
-gulp.task('server', function () {
+gulp.task('server', ['default'], function () {
     var path = require('path'),
         express = require('express'),
         app = express();
