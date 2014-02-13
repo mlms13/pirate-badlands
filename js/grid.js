@@ -4,44 +4,20 @@ var storage = require('./storage');
 var Grid = function (options) {
     var self = this,
         cursor = new Cursor(options.template.startPos),
-        tiles = [], // an array of tile objects
-        score = 0,
-        moves = 0;
+        tiles = []; // an array of tile objects
 
     this.template = options.template;
     this.height = options.template.height;
     this.width = options.template.width;
 
     // listen for global events
-    $(document).on('cursorStarted.levelEvent', function (event, data) {
-        moves += 1;
-    });
-
     $(document).on('cursorPlaced.levelEvent', function (event, data) {
         var tile = tiles[data.row][data.col];
-        var totalScore = storage.getData('user', 'totalScore');
 
         $('.selected').removeClass('selected');
-        if (!tile.visited) {
-            score += tile.value;
-            totalScore += tile.value;
-
-            if (tile.points) {
-                score += tile.points;
-                totalScore += tile.points;
-            }
-        }
-
         tile.clearTile();
-        // tile.visited = true; // Redundant? It's done in clearTile().
         tile.$el.html('');
         tile.$el.addClass('visited selected');
-
-        storage.setData('user', 'totalScore', totalScore);
-
-        $('.game-score').text(score);
-        $('.game-moves').text(moves);
-        $('.total-score').text(totalScore);
     });
 
     function createTileElement(row, col) {

@@ -85,9 +85,12 @@ var Game = function (options) {
 
         // make sure we're starting with a clean slate
         $('#game-board').empty();
+        var moves = 0,
+            score = 0;
 
-        // Clear level event handlers
+        // Reset level event handlers
         $(document).off('.levelEvent');
+        levelEventHandlers(moves, score);
 
         $('#resetGame').css('visibility', 'visible').text('Reset Game');
 
@@ -138,55 +141,80 @@ var Game = function (options) {
         });
     };
 
-    $(document).on('cursorEnded', function (event, data) {
-        if (self.grid.getTileByIndex(data.row, data.col).endGame) {
-            // TODO: make it to where the cursor doesn't actually move to the booty?
-            //       It would be cool if we had the pirate ship one block away so we can see the open treasure chest.
-            self.grid.getTileByIndex(data.row, data.col).$el.addClass('open');
+    function levelEventHandlers(moves, score) {
+        $(document).on('cursorStarted.levelEvent', function (event, data) {
+            moves += 1;
+        });
+        $(document).on('cursorPlaced.levelEvent', function (event, data) {
+            var tile = self.grid.getTileByIndex(data.row, data.col),
+                totalScore = storage.getData('user', 'totalScore');
 
-            // increment noLevels, give option to start next game
-            var user = storage.getData('user');
-            storage.setData('user', 'noLevels', user.noLevels += 1);
+            if (!tile.visited) {
+                score += tile.value;
+                totalScore += tile.value;
 
-            // console.log('right before the event..');
-
-            $(document).trigger('levelCompleted');
-
-            $('#resetGame').text('Next Level');
-
-            if (user.noLevels === templates.length) {
-                var topMessage;
-
-                if (user.totalScore > getMaxOfArray(user.topScores)) {
-                    topMessage = "That's good enough to beat your high score! Nice Job!";
-                } else if (user.totalScore === getMaxOfArray(user.topScores)) {
-                    topMessage = "That ties your highest score, arrrrrrrr.";
-                } else {
-                    topMessage = "Sadly that doesn't beat your top score of " + getMaxOfArray(user.topScores) + " try harrrrrrrrder next time!";
+                if (tile.points) {
+                    score += tile.points;
+                    totalScore += tile.points;
                 }
-
-                notification.modal({
-                    title: 'Arrrrr ye be one fair pirate!',
-                    message: 'Ye have completed all levels with a score of ' + user.totalScore + ' matey! ' + topMessage + ' Click on Restart Game to reset your game and see if you can get even more booty! Your achievements will persist.',
-                    buttonText: 'Restart Game',
-                    clickHandler: function () {
-                        newUser = storage.resetAndGetUser();
-                        self.startLevel(newUser.noLevels);
-                    }
-                });
-            } else {
-
-                notification.modal({
-                    title: 'Argggghh!',
-                    message: 'You have found the booty and conquered this sea!  On to the Next!',
-                    buttonText: 'Next Level',
-                    clickHandler: function () {
-                        self.startLevel(user.noLevels);
-                    }
-                });
             }
-        }
-    });
+
+            storage.setData('user', 'totalScore', totalScore);
+
+            $('.game-score').text(score);
+            $('.game-moves').text(moves);
+            $('.total-score').text(totalScore);
+        });
+        $(document).on('cursorEnded.levelEvent', function (event, data) {
+            if (self.grid.getTileByIndex(data.row, data.col).endGame) {
+                // TODO: make it to where the cursor doesn't actually move to the booty?
+                //       It would be cool if we had the pirate ship one block away so we can see the open treasure chest.
+                self.grid.getTileByIndex(data.row, data.col).$el.addClass('open');
+
+                // increment noLevels, give option to start next game
+                var user = storage.getData('user');
+                storage.setData('user', 'noLevels', user.noLevels += 1);
+
+                // console.log('right before the event..');
+
+                $(document).trigger('levelCompleted');
+
+                $('#resetGame').text('Next Level');
+
+                if (user.noLevels === templates.length) {
+                    var topMessage;
+
+                    if (user.totalScore > getMaxOfArray(user.topScores)) {
+                        topMessage = "That's good enough to beat your high score! Nice Job!";
+                    } else if (user.totalScore === getMaxOfArray(user.topScores)) {
+                        topMessage = "That ties your highest score, arrrrrrrr.";
+                    } else {
+                        topMessage = "Sadly that doesn't beat your top score of " + getMaxOfArray(user.topScores) + " try harrrrrrrrder next time!";
+                    }
+
+                    notification.modal({
+                        title: 'Arrrrr ye be one fair pirate!',
+                        message: 'Ye have completed all levels with a score of ' + user.totalScore + ' matey! ' + topMessage + ' Click on Restart Game to reset your game and see if you can get even more booty! Your achievements will persist.',
+                        buttonText: 'Restart Game',
+                        clickHandler: function () {
+                            newUser = storage.resetAndGetUser();
+                            self.startLevel(newUser.noLevels);
+                        }
+                    });
+                } else {
+
+                    notification.modal({
+                        title: 'Argggghh!',
+                        message: 'You have found the booty and conquered this sea!  On to the Next!',
+                        buttonText: 'Next Level',
+                        clickHandler: function () {
+                            self.startLevel(user.noLevels);
+                        }
+                    });
+                }
+            }
+        });
+    }
 };
 
 function getMaxOfArray(numArray) {
