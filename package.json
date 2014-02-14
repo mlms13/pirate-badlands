@@ -11,8 +11,8 @@
     "gulp-stylus": "0.0.12",
     "gulp-jshint": "~1.4.0",
     "jshint-stylish": "*",
-    "browserify": "~3.28.2",
-    "uglify-js": "~2.4.12",
+    "gulp-browserify": "~0.4.4",
+    "gulp-uglify": "~0.2.1",
     "shelljs": "~0.2.6"
   },
   "jshintConfig": {
