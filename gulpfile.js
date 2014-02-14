@@ -61,4 +61,47 @@ gulp.task('watch', ['default', 'server'], function () {
     gulp.watch('index.html', ['duplicator']);
 });
 
+gulp.task('deploy', ['default'], function () {
+    var shell = require('shelljs');
+
+    if (!shell.which('git')) {
+        console.error('You need git installed to deploy.');
+        exit(1);
+    }
+
+    // backup the .gitignore
+    shell.cp('.gitignore', '.gitignore-backup');
+
+    // un-ignore the ./build/ directory
+
+    // add the build directory
+    if (shell.exec('git add ./build').code !== 0) {
+        console.error('Failed to add build directory to commit');
+        shell.exit(1);
+    }
+
+    // create a new commit with the build directory
+    if (shell.exec('git commit -m "Add the build folder"').code !== 0) {
+        console.error('Committing changes failed');
+        shell.exit(1);
+    }
+
+    // push our changes to a remote named heroku
+    if (shell.exec('git push --force heroku master').code !== 0) {
+        console.error('Pushing to heroku failed');
+        shell.exit(1);
+    }
+
+    // undo our commit
+    if (shell.exec('git reset --hard HEAD~1').code !== 0) {
+        console.error('Reverting our commit failed');
+        shell.exit(1);
+    }
+
+    // restore original .gitignore
+    shell.rm('.gitignore');
+    shell.mv('.gitignore-backup', '.gitignore');
+
+});
+
 gulp.task('default', ['stylus', 'lint', 'js', 'duplicator']);
